@@ -1,0 +1,570 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base styles */
+.print-order-user-orders {
+    max-width: 4xl;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1.5rem;
+    direction: rtl;
+}
+
+/* Loading overlay */
+.loading-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: #ffffff;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    display: none;
+    text-align: center;
+    font-size: 1.25rem;
+    color: #3b82f6;
+    transition: opacity 0.5s ease;
+}
+
+.loading-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+/* Orders table */
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.orders-table th,
+.orders-table td {
+    padding: 0.75rem;
+    text-align: center;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.orders-table th {
+    background-color: #f3f4f6;
+    font-weight: 600;
+}
+
+/* Order details modal - (Deprecated but kept for reference) */
+.order-details-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+}
+
+.order-details-modal.active {
+    display: flex;
+}
+
+.order-details-content {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 0.375rem;
+    max-width: 90%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.close-btn {
+    top: 0;
+    z-index: 10;
+    float: left;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    overflow-x: auto;
+    top: 3.5rem;
+    z-index: 10;
+    background-color: white;
+}
+
+.tab {
+    @apply px-4 py-2 rounded-t-lg rounded-b-none bg-gray-200 cursor-pointer hover:bg-emerald-200;
+}
+
+.tab.active {
+    @apply bg-emerald-500 text-white;
+}
+
+/* Order steps */
+.order-steps {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    top: 0;
+    z-index: 10;
+    background-color: white;
+}
+
+.step-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.step-circle {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #d1d5db;
+    transition: transform 0.3s ease;
+}
+
+.step-circle .step-icon {
+    width: 60%;
+    height: 60%;
+    object-fit: contain;
+    fill: #10b981;
+}
+
+.step-circle.active {
+    @apply bg-emerald-500 animate-pulse;
+}
+
+.step-circle.completed {
+    @apply bg-emerald-500;
+}
+
+.step-line {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    right: 1.5rem;
+    height: 2px;
+    background-color: #d1d5db;
+    z-index: -1;
+}
+
+.step-line.completed {
+    @apply bg-emerald-500;
+}
+
+.step-label {
+    text-align: center;
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+    color: #6b7280;
+}
+
+.step-label.active {
+    @apply text-emerald-500;
+}
+
+@media (max-width: 640px) {
+    .step-circle {
+        width: 2rem;
+        height: 2rem;
+    }
+    .step-line {
+        top: 1rem;
+        left: 1rem;
+        right: 1rem;
+    }
+    .step-label {
+        font-size: 0.625rem;
+    }
+    .tabs {
+        top: 2.5rem;
+    }
+    .tab-content-container {
+        max-height: calc(90vh - 8rem);
+    }
+}
+
+@media (min-width: 641px) {
+    .order-steps {
+        gap: 1rem;
+    }
+    .step-circle {
+        width: 5rem;
+        height: 5rem;
+    }
+    .step-line {
+        top: 2.5rem;
+        left: 2.5rem;
+        right: 2.5rem;
+    }
+}
+
+/* Tab content container */
+.tab-content-container {
+    max-height: calc(90vh - 12rem);
+    min-height: 20rem;
+    overflow-y: auto;
+    padding-bottom: 2rem;
+    box-sizing: border-box;
+}
+
+/* Tooltip */
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    @apply px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap z-10;
+    display: block;
+}
+
+/* Order Summary Card and Financial Details */
+.order-summary-card {
+    @apply border border-gray-200 bg-white rounded-xl p-6 w-full shadow-md;
+}
+
+.summary-items {
+    @apply flex flex-wrap gap-4;
+}
+
+.financial-details {
+    margin-top: 1rem;
+}
+
+.financial-table {
+    width: 100%;
+    border-collapse: collapse;
+    @apply rounded-lg;
+}
+
+.financial-table th,
+.financial-table td {
+    padding: 0.5rem;
+    text-align: center;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.financial-table th {
+    @apply bg-emerald-200 font-semibold;
+}
+
+.payment-status {
+    @apply px-2 py-1 rounded font-medium;
+}
+
+.payment-status.paid {
+    @apply bg-green-100 text-emerald-700;
+}
+
+.payment-status.pending {
+    @apply bg-yellow-100 text-amber-700;
+}
+
+/* Design Tab Chat */
+.chat-container {
+    max-height: none;
+    overflow-y: visible;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+}
+
+.chat-message {
+    max-width: 70%;
+    margin: 0.5rem 0;
+    padding: 0.75rem;
+    border-radius: 0.375rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-message.admin,
+.chat-message.system {
+    background-color: #e5e7eb;
+    margin-right: 30%;
+    text-align: left;
+    align-self: flex-start;
+}
+
+.chat-message.user {
+    background-color: #d1fae5;
+    margin-left: 30%;
+    text-align: right;
+    align-self: flex-end;
+}
+
+.chat-message.initial {
+    @apply bg-gray-200;
+}
+
+.chat-time {
+    @apply text-xs text-gray-500 mt-1 text-right;
+}
+
+.chat-time.loading i {
+    @apply animate-spin;
+}
+
+.chat-time .retry-link {
+    @apply bg-transparent border-none text-red-600 cursor-pointer text-xs hover:text-red-800 transition-colors duration-200;
+}
+
+.chat-thumbnail {
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: contain;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.file-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.file-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.file-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    border-radius: 0.25rem;
+}
+
+.chat-download {
+    @apply relative inline-flex items-center px-3 py-1.5 bg-blue-600 text-white rounded-lg text-sm font-medium shadow-sm hover:bg-blue-700 hover:scale-105 transition-all duration-200 no-underline;
+}
+
+.chat-download::before {
+    content: '';
+    @apply inline-block w-4 h-4 mr-1 bg-no-repeat bg-center;
+    background-image: url('<?php echo esc_url(PRINT_ORDER_URL . 'assets/icons/download.svg'); ?>');
+    background-size: contain;
+}
+
+.revision-remaining-circle {
+    @apply inline-flex w-6 h-6 bg-red-600 text-white rounded-full justify-center items-center ml-1 text-xs;
+}
+
+.revision-limit-warning {
+    @apply text-sm;
+}
+
+.design-actions {
+    margin-top: 1rem;
+}
+
+.design-action-btn {
+    @apply px-4 py-2 mr-1 rounded cursor-pointer;
+}
+
+/* Progress Bar for File Upload */
+progress {
+    width: 100%;
+    height: 1rem;
+    @apply rounded bg-gray-200;
+}
+
+progress::-webkit-progress-bar {
+    @apply bg-gray-200 rounded;
+}
+
+progress::-webkit-progress-value {
+    @apply bg-emerald-500 rounded transition-all duration-300;
+}
+
+progress::-moz-progress-bar {
+    @apply bg-emerald-500 rounded;
+}
+
+/* Custom Button Styles */
+.print-order-btn {
+    @apply px-6 py-3 bg-blue-600 text-white rounded-lg text-sm font-medium shadow-sm hover:bg-blue-700 transition-all duration-200 cursor-pointer outline-none border-none;
+}
+
+.print-order-confirm-btn {
+    @apply print-order-btn;
+}
+
+.print-order-confirm-btn.loading .spinner {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid #fff;
+    border-top: 2px solid transparent;
+    border-radius: 9999px;
+    animation: spin 1s linear infinite;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+}
+
+.print-order-revision-btn {
+    @apply print-order-btn;
+}
+
+.revision-form {
+    display: none;
+}
+
+.revision-form.active {
+    display: block;
+}
+
+.revision-form-actions {
+    margin-top: 0.5rem;
+}
+
+/* Shipping Tab */
+.shipping-card {
+    @apply p-4 border border-gray-200 rounded-xl mb-4 bg-white shadow-md;
+}
+
+.shipping-status {
+    @apply px-2 py-1 rounded font-medium;
+}
+
+.shipping-status.shipping {
+    @apply bg-yellow-100 text-amber-700;
+}
+
+.shipping-status.delivered {
+    @apply bg-green-100 text-emerald-700;
+}
+
+.shipping-form label {
+    @apply block mb-1 font-medium;
+}
+
+.shipping-form input,
+.shipping-form select {
+    @apply w-full p-2 border border-gray-200 rounded-md mb-2;
+}
+
+.shipping-submit {
+    @apply print-order-btn;
+}
+
+.copy-btn {
+    @apply px-2 py-1 bg-emerald-500 text-white rounded ml-2 cursor-pointer;
+}
+
+.copy-btn:hover {
+    @apply bg-emerald-700;
+}
+
+.tracking-link {
+    @apply text-blue-600 underline;
+}
+
+.tracking-link:hover {
+    @apply text-blue-700;
+}
+
+/* Filters and Pagination */
+.filters {
+    @apply flex gap-4 mb-4;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+}
+
+.filter-select {
+    @apply p-2 border border-gray-200 rounded bg-white;
+}
+
+.print-order-pagination {
+    @apply flex gap-3 justify-center mt-4;
+}
+
+.print-order-pagination-link {
+    @apply px-4 py-2 border border-gray-300 rounded-lg text-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-200;
+}
+
+.print-order-pagination-link.active,
+.print-order-pagination-link:hover {
+    @apply bg-blue-600 text-white;
+}
+
+.notification {
+    @apply fixed top-4 right-4 p-3 bg-emerald-500 text-white rounded z-50 hidden animate-fade-out;
+}
+
+/* Custom animations layer */
+@layer utilities {
+    .animate-fade-out {
+        animation: fadeOut 2s ease-out forwards;
+    }
+
+    @keyframes fadeOut {
+        0% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+            display: none;
+        }
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .orders-table {
+        @apply block overflow-x-auto;
+    }
+    .order-details-content {
+        @apply max-w-full;
+    }
+    .order-steps {
+        @apply justify-start gap-2;
+    }
+    .step-line {
+        top: 1rem;
+        left: 1rem;
+        right: 1rem;
+    }
+    .financial-table {
+        display: block;
+        overflow-x: auto;
+    }
+    .chat-message {
+        max-width: 90%;
+        margin-right: 5%;
+        margin-left: 5%;
+    }
+}
+
+@media (min-width: 641px) {
+    .chat-message {
+        max-width: 70%;
+    }
+}

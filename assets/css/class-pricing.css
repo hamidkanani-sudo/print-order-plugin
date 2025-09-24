@@ -1,0 +1,178 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --wp-admin-theme-color-darker: #f9fafb; /* تغییر به خاکستری خیلی روشن */
+}
+
+@layer components {
+    .table-container {
+        @apply overflow-x-auto;
+    }
+
+    .print-order-table {
+        @apply w-full table-auto;
+    }
+
+    .print-order-table thead {
+        @apply bg-[var(--wp-admin-theme-color-darker)] text-gray-900 rounded-tl-lg rounded-tr-lg;
+    }
+
+    .sticky-header {
+        @apply sticky top-0 z-10 bg-[var(--wp-admin-theme-color-darker)] text-gray-900 rounded-tl-lg rounded-tr-lg will-change-transform;
+    }
+
+    .print-order-table th {
+        @apply px-2 py-3 text-center text-gray-900 font-semibold cursor-pointer hover:bg-gray-200 transition-colors;
+    }
+
+    .print-order-table th.sorted-asc::after {
+        content: ' ↑';
+        @apply text-gray-900;
+    }
+
+    .print-order-table th.sorted-desc::after {
+        content: ' ↓';
+        @apply text-gray-900;
+    }
+
+    .print-order-table tbody tr {
+        @apply bg-white border-b border-gray-200 will-change-transform;
+    }
+
+    .print-order-table td {
+        @apply px-2 py-3;
+    }
+
+    .print-order-table th:nth-child(1),
+    .print-order-table td:nth-child(1) {
+        @apply min-w-[200px] max-w-[250px];
+    }
+
+    .print-order-table th:nth-child(2),
+    .print-order-table td:nth-child(2) {
+        @apply min-w-[120px] max-w-[150px];
+    }
+
+    .print-order-table th:nth-child(3),
+    .print-order-table td:nth-child(3) {
+        @apply min-w-[80px] max-w-[120px];
+    }
+
+    .print-order-table th:nth-child(4),
+    .print-order-table td:nth-child(4) {
+        @apply min-w-[100px] max-w-[120px];
+    }
+
+    .print-order-table th:nth-child(5),
+    .print-order-table td:nth-child(5) {
+        @apply min-w-[60px] max-w-[80px];
+    }
+
+    .print-order-table th:nth-child(6),
+    .print-order-table td:nth-child(6) {
+        @apply min-w-[80px] max-w-[100px];
+    }
+
+    .print-order-table th:nth-child(7),
+    .print-order-table td:nth-child(7) {
+        @apply min-w-[80px] max-w-[120px];
+    }
+
+    .print-order-table th:nth-child(8),
+    .print-order-table td:nth-child(8) {
+        @apply min-w-[60px] max-w-[60px];
+    }
+
+    .print-order-table th:nth-child(9),
+    .print-order-table td:nth-child(9) {
+        @apply min-w-[80px] max-w-[100px];
+    }
+
+    .print-order-table input,
+    .print-order-table select {
+        @apply w-full border p-2 rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500 will-change-transform;
+    }
+
+    .print-order-table input.price-input {
+        @apply text-right;
+    }
+
+    .actions {
+        @apply flex gap-2;
+    }
+
+    .duplicate-row {
+        @apply flex w-10 h-10 items-center justify-center bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-200 hover:scale-105 cursor-pointer border-none;
+    }
+
+    .remove-row {
+        @apply flex w-10 h-10 items-center justify-center bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-200 hover:scale-105 cursor-pointer border-none;
+    }
+
+    .btn-primary {
+        @apply inline-flex px-6 py-3 bg-blue-600 text-white rounded-lg text-sm font-medium shadow-sm hover:bg-blue-700 transition-all duration-200 cursor-pointer !important;
+    }
+
+    .btn-secondary {
+        @apply inline-flex px-4 py-1.5 bg-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-400 transition-all duration-200 !important;
+    }
+
+    .card {
+        @apply bg-white rounded-xl shadow-md p-6 w-full;
+    }
+
+    .add-row-container {
+        @apply mt-4 flex justify-end mb-4;
+    }
+
+    .submit {
+        @apply mt-4 text-left;
+    }
+}
+
+@layer utilities {
+    /* حذف تعریف w-1/9 با درصد */
+}
+
+@media (max-width: 640px) {
+    .print-order-table {
+        @apply block;
+    }
+
+    .print-order-table thead {
+        @apply hidden;
+    }
+
+    .print-order-table tbody,
+    .print-order-table tr {
+        @apply block;
+    }
+
+    .print-order-table tr {
+        @apply mb-4 border border-gray-200 rounded-lg p-4 bg-white;
+    }
+
+    .print-order-table td {
+        @apply block w-full px-1 py-2 text-right flex items-center;
+    }
+
+    .print-order-table td:before {
+        content: attr(data-label);
+        @apply block text-sm font-medium text-gray-600 mb-1;
+    }
+
+    .print-order-table tr {
+        @apply grid grid-cols-2 gap-2;
+    }
+
+    .print-order-table td:nth-child(9) {
+        @apply col-span-2 flex justify-end gap-2 mt-2;
+    }
+
+    .print-order-table input,
+    .print-order-table select {
+        @apply w-full max-w-[150px] flex-1; /* اضافه کردن flex-1 برای یکسان‌سازی عرض */
+    }
+}

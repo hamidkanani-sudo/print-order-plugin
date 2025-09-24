@@ -1,0 +1,139 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --wp-admin-theme-color-darker: #f9fafb; /* خاکستری خیلی روشن، مشابه pricing */
+}
+
+@layer components {
+    .table-container {
+        @apply overflow-x-auto;
+    }
+
+    .print-order-table {
+        @apply w-full table-auto;
+    }
+
+    .print-order-table thead {
+        @apply bg-[var(--wp-admin-theme-color-darker)] text-gray-900 rounded-tl-lg rounded-tr-lg;
+    }
+
+    .sticky-header {
+        @apply sticky top-0 z-10 bg-[var(--wp-admin-theme-color-darker)] text-gray-900 rounded-tl-lg rounded-tr-lg will-change-transform;
+    }
+
+    .print-order-table th {
+        @apply px-4 py-3 text-center text-gray-900 font-semibold cursor-pointer hover:bg-gray-200 transition-colors;
+    }
+
+    .print-order-table th.sorted-asc::after {
+        content: ' ↑';
+        @apply text-gray-900;
+    }
+
+    .print-order-table th.sorted-desc::after {
+        content: ' ↓';
+        @apply text-gray-900;
+    }
+
+    .print-order-table tbody tr {
+        @apply bg-white;
+    }
+
+    .print-order-table td {
+        @apply px-4 py-3;
+    }
+
+    .print-order-table th:nth-child(1),
+    .print-order-table td:nth-child(1) {
+        @apply min-w-[60px] max-w-[80px] text-center;
+    }
+
+    .print-order-table th:nth-child(2),
+    .print-order-table td:nth-child(2) {
+        @apply min-w-[300px] max-w-[400px];
+    }
+
+    .print-order-table th:nth-child(3),
+    .print-order-table td:nth-child(3) {
+        @apply min-w-[150px] max-w-[200px];
+    }
+
+    .print-order-table input[type="checkbox"] {
+        @apply h-5 w-5 text-blue-600 rounded border-gray-400;
+    }
+
+    .print-order-table input[type="number"] {
+        @apply w-full p-2 border border-gray-400 rounded-md placeholder-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+    }
+
+    .btn-primary {
+        @apply inline-flex px-6 py-3 bg-blue-600 text-white rounded-lg text-sm font-medium shadow-sm hover:bg-blue-700 transition-all duration-200 cursor-pointer !important;
+    }
+
+    .pricing-card {
+        @apply bg-white rounded-xl shadow-md p-6 w-full;
+    }
+
+    .submit {
+        @apply mt-4 text-left;
+    }
+
+    .sub-category td:nth-child(2) {
+        @apply pr-6; /* 24px padding-right برای ساختار درختی */
+    }
+
+    .category-icon {
+        @apply inline-flex items-center justify-center w-5 h-5 rounded-md bg-gray-200 text-gray-600 mr-1.5 text-base; /* w-5 h-5 برای کوچکتر شدن، mr-1.5 برای فاصله 6px */
+    }
+}
+
+@layer utilities {
+    /* سفارشی‌سازی‌های اضافی اگر لازم */
+}
+
+@media (max-width: 640px) {
+    .print-order-table {
+        @apply block;
+    }
+
+    .print-order-table thead {
+        @apply hidden;
+    }
+
+    .print-order-table tbody,
+    .print-order-table tr {
+        @apply block;
+    }
+
+    .print-order-table tr {
+        @apply mb-4 border-0 rounded-lg p-4 bg-white; /* حذف border-bottom */
+    }
+
+    .print-order-table td {
+        @apply block w-full px-4 py-2 text-right flex items-center;
+    }
+
+    .print-order-table td:before {
+        content: attr(data-label);
+        @apply block text-sm font-medium text-gray-600 mb-1;
+    }
+
+    .print-order-table tr {
+        @apply grid grid-cols-2 gap-2;
+    }
+
+    .print-order-table input,
+    .print-order-table select {
+        @apply w-full max-w-[150px] flex-1;
+    }
+
+    .sub-category td:nth-child(2) {
+        @apply pr-4; /* تنظیم برای موبایل */
+    }
+
+    .category-icon {
+        @apply w-5 h-5 mr-1.5 text-base;
+    }
+}

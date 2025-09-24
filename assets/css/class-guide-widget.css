@@ -1,0 +1,131 @@
+/* Print Order Guide Widget Styles */
+.print-order-guide {
+    direction: rtl;
+}
+
+.guide-widget-mobile {
+    position: relative;
+    pointer-events: none; /* Prevent parent from blocking clicks */
+}
+
+.guide-widget-mobile * {
+    pointer-events: auto; /* Ensure children can receive clicks */
+}
+
+.guide-toggle-button {
+    position: var(--button-position-type, fixed); /* Default to fixed, overridden by data-button-sticky */
+    z-index: 1000;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.guide-toggle-button.sticky {
+    position: fixed;
+}
+
+.guide-toggle-button:not(.sticky) {
+    position: absolute;
+}
+
+.guide-toggle-button.top-left {
+    top: var(--button-offset-vertical, 2%);
+    left: var(--button-offset-horizontal, 2%);
+}
+
+.guide-toggle-button.top-right {
+    top: var(--button-offset-vertical, 2%);
+    right: var(--button-offset-horizontal, 2%);
+}
+
+.guide-toggle-button.bottom-left {
+    bottom: var(--button-offset-vertical, 2%);
+    left: var(--button-offset-horizontal, 2%);
+}
+
+.guide-toggle-button.bottom-right {
+    bottom: var(--button-offset-vertical, 2%);
+    right: var(--button-offset-horizontal, 2%);
+}
+
+.guide-slide {
+    position: fixed;
+    top: 0;
+    height: 100%;
+    overflow-y: auto;
+    z-index: 999;
+}
+
+.guide-slide-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 40;
+}
+
+.close-slide {
+    cursor: pointer;
+    z-index: 1002; /* Increased to ensure clickability */
+    background: none;
+    border: none;
+    padding: 12px; /* Increased padding for better click area */
+    pointer-events: auto;
+}
+
+.close-slide i {
+    font-size: 28px; /* Increased for visibility */
+    color: #4B5563;
+}
+
+.close-slide:hover i {
+    color: #1F2937;
+}
+
+/* Animation Keyframes */
+@keyframes scale {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+}
+
+@media (min-width: 768px) {
+    .guide-toggle-button,
+    .guide-slide,
+    .guide-slide-overlay {
+        display: none !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .guide-widget {
+        display: none !important;
+    }
+}

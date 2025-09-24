@@ -1,0 +1,83 @@
+.order-progress-widget {
+    @apply w-full;
+}
+
+.order-progress-card {
+    @apply bg-white rounded-lg p-4 mb-4 flex flex-col sm:flex-row;
+}
+
+.order-info {
+    @apply w-full sm:w-1/5 mb-4 sm:mb-0;
+}
+
+.order-info p {
+    @apply mb-2;
+}
+
+.order-info strong {
+    @apply font-semibold;
+}
+
+.order-info a.text-blue-600 {
+    @apply hover:underline;
+}
+
+.details-button {
+    @apply inline-block text-center transition-colors duration-200;
+}
+
+.order-steps {
+    @apply relative flex overflow-x-auto sm:w-4/5;
+    scrollbar-width: thin;
+}
+
+.step-container {
+    @apply flex flex-col items-center justify-center mx-2 text-center flex-shrink-0;
+    min-width: 70px;
+}
+
+.step-circle {
+    @apply rounded-full border-2 flex items-center justify-center relative z-10;
+}
+
+.step-circle.completed {
+    @apply border-blue-600 bg-blue-100;
+}
+
+.step-circle.active {
+    @apply border-blue-600 bg-blue-600;
+}
+
+.step-icon {
+    @apply w-6 h-6;
+}
+
+.step-circle.active .step-icon {
+    @apply filter invert brightness-0;
+}
+
+.step-label {
+    @apply mt-1 text-gray-600;
+}
+
+.step-label.active {
+    @apply text-blue-600 font-semibold;
+}
+
+.step-label.completed {
+    @apply text-gray-800;
+}
+
+.step-line {
+    @apply absolute top-5 left-0 right-0 h-1 bg-gray-300 z-0;
+}
+
+.step-line.completed {
+    @apply bg-blue-600;
+}
+
+@media (max-width: 640px) {
+    .order-steps {
+        @apply flex overflow-x-auto;
+    }
+}

@@ -1,0 +1,421 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .print-order-user-transactions .card {
+    @apply max-w-full w-full bg-white border border-gray-300 rounded-lg p-4 mb-6 overflow-x-hidden;
+  }
+
+  .print-order-user-transactions .table-container {
+    @apply max-w-full w-full min-w-full overflow-x-auto relative;
+  }
+
+  .print-order-user-transactions .print-order-table {
+    @apply w-full min-w-0 border-collapse table-auto;
+  }
+
+  .print-order-user-transactions .print-order-table th,
+  .print-order-user-transactions .print-order-table td {
+    @apply p-3 text-right border border-gray-300 text-sm;
+  }
+
+  .print-order-user-transactions .print-order-table th {
+    @apply bg-gray-100 font-semibold;
+  }
+
+  .print-order-user-transactions .print-order-table tbody tr {
+    @apply bg-white;
+  }
+
+  .print-order-user-transactions .print-order-table th.order-number,
+  .print-order-user-transactions .print-order-table td.order-number {
+    @apply min-w-[10%];
+  }
+
+  .print-order-user-transactions .print-order-table th.date,
+  .print-order-user-transactions .print-order-table td.date {
+    @apply min-w-[15%];
+  }
+
+  .print-order-user-transactions .print-order-table th.product,
+  .print-order-user-transactions .print-order-table td.product {
+    @apply min-w-[30%];
+  }
+
+  .print-order-user-transactions .print-order-table th.amount,
+  .print-order-user-transactions .print-order-table td.amount {
+    @apply min-w-[15%];
+  }
+
+  .print-order-user-transactions .print-order-table th.status,
+  .print-order-user-transactions .print-order-table td.status {
+    @apply min-w-[15%];
+  }
+
+  .print-order-user-transactions .print-order-table th.actions,
+  .print-order-user-transactions .print-order-table td.actions {
+    @apply min-w-[15%] whitespace-nowrap;
+  }
+
+  .print-order-user-transactions .toolbar {
+    @apply flex gap-2 flex-wrap items-center mb-4;
+  }
+
+  .print-order-user-transactions .toolbar select {
+    @apply p-2 rounded-md border border-gray-400 min-w-[150px] w-full max-w-[200px] bg-white;
+  }
+
+  .print-order-user-transactions .toolbar button {
+    @apply p-2 px-4 rounded-md bg-blue-500 text-white border-none hover:bg-blue-600 text-sm font-semibold transition-colors;
+  }
+
+  .print-order-user-transactions .pagination-container {
+    @apply mt-6 flex justify-center;
+  }
+
+  .print-order-user-transactions .pagination-container a {
+    @apply px-3 py-2 mx-1 border border-gray-400 rounded-md text-blue-700 cursor-pointer inline-block no-underline;
+  }
+
+  .print-order-user-transactions .pagination-container a:hover {
+    @apply bg-gray-100;
+  }
+
+  .print-order-user-transactions .pagination-container a.current {
+    @apply bg-blue-700 text-white border-blue-700;
+  }
+
+  .print-order-user-transactions .accordion-wrapper {
+    @apply hidden w-full bg-white border border-gray-300 rounded-lg p-4 mt-2 shadow-md relative z-50;
+  }
+
+  .print-order-user-transactions .accordion-wrapper.active {
+    @apply block;
+  }
+
+  .print-order-user-transactions .accordion-row {
+    @apply hidden w-full absolute left-0 z-40;
+  }
+
+  .print-order-user-transactions .accordion-row.active {
+    @apply block;
+  }
+
+  .print-order-user-transactions .main-row {
+    @apply relative;
+  }
+
+  .print-order-user-transactions .accordion-row.active .accordion-wrapper {
+    @apply absolute top-full left-0 w-full bg-white border border-gray-300 rounded-lg p-4 mt-2 shadow-md z-50;
+  }
+
+  .print-order-user-transactions .accordion-toggle {
+    @apply px-3 py-1.5 rounded-md bg-gray-200 text-gray-700 border-0 text-sm transition-colors;
+  }
+
+  .print-order-user-transactions .accordion-toggle:hover {
+    @apply bg-gray-300;
+  }
+
+  .print-order-user-transactions .payment-button {
+    @apply px-3 py-1.5 rounded-md bg-blue-700 text-white border-0 text-sm transition-colors mr-2;
+  }
+
+  .print-order-user-transactions .payment-button:hover {
+    @apply bg-blue-800;
+  }
+
+  .print-order-user-transactions .close-accordion {
+    @apply bg-gray-200 text-gray-700 text-xl cursor-pointer absolute top-1 left-1 z-10 w-6 h-6 min-w-6 min-h-6 rounded-full flex items-center justify-center leading-6 border-0 outline-none;
+  }
+
+  .print-order-user-transactions .close-accordion:hover {
+    @apply bg-gray-300 text-gray-900;
+  }
+
+  .print-order-user-transactions .transaction-details {
+    @apply p-0 w-full max-w-none relative text-right;
+  }
+
+  .print-order-user-transactions .accordion-grid {
+    @apply grid grid-cols-1 gap-1 p-2 m-0;
+  }
+
+  .print-order-user-transactions .accordion-grid .item {
+    @apply flex flex-row items-center justify-between text-right w-full;
+  }
+
+  .print-order-user-transactions .accordion-grid .item .label {
+    @apply w-auto text-right font-semibold text-gray-700 pr-2 flex-shrink-0;
+  }
+
+  .print-order-user-transactions .accordion-grid .item .value {
+    @apply flex-1 text-right text-gray-600;
+  }
+
+  .print-order-user-transactions .mobile-label {
+    @apply font-semibold text-gray-700 mr-1;
+  }
+
+  .print-order-user-transactions .no-padding {
+    @apply p-0 h-0;
+  }
+
+  .print-order-user-transactions .loading-spinner {
+    @apply hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border-4 border-gray-200 border-t-blue-700 rounded-full w-10 h-10 animate-spin;
+  }
+
+  .print-order-user-transactions .loading-overlay {
+    @apply hidden absolute top-0 left-0 w-full h-full bg-white/80 z-10;
+  }
+
+  .print-order-user-transactions .loading-overlay.active {
+    @apply block;
+  }
+
+  .print-order-user-transactions .error-message {
+    @apply hidden text-red-600 text-center p-2.5 mt-2.5 border border-red-600 rounded-md;
+  }
+  
+  /* Custom styles for user transactions */
+.print-order-user-transactions {
+    @apply border border-gray-300;
+}
+.toolbar {
+    @apply flex rounded overflow-hidden;
+}
+.filter-select {
+    @apply border border-gray-300 rounded p-2 transition-all duration-300;
+}
+.print-order-table {
+    @apply w-full border-collapse mb-5;
+}
+.print-order-table th,
+.print-order-table td {
+    @apply border border-gray-300 text-right;
+}
+.accordion-toggle,
+.payment-button {
+    @apply inline-block no-underline transition-all duration-300;
+}
+.accordion-row {
+    @apply hidden;
+}
+.accordion-row.active {
+    @apply table-row;
+}
+.accordion-wrapper {
+    @apply border border-gray-300 rounded relative hidden;
+}
+.accordion-wrapper.active {
+    @apply block;
+}
+.close-accordion {
+    @apply absolute top-2.5 left-2.5 cursor-pointer;
+}
+.pagination-links {
+    @apply flex justify-center gap-1 p-2 rounded;
+}
+.pagination-link {
+    @apply px-3 py-2 rounded no-underline transition-all duration-300;
+}
+.pagination-link:hover {
+    @apply bg-gray-200;
+}
+.pagination-link.current {
+    @apply font-bold;
+}
+.error-message {
+    @apply text-red-600 text-center my-5;
+}
+.loading-overlay {
+    @apply relative;
+}
+.loading-overlay.active::before {
+    content: '';
+    @apply absolute top-0 left-0 w-full h-full bg-white bg-opacity-70 z-10;
+}
+.loading-spinner {
+    @apply hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[11];
+}
+.loading-overlay.active .loading-spinner {
+    @apply block;
+}
+@media (max-width: 640px) {
+    .print-order-user-transactions {
+        @apply p-4;
+    }
+    .toolbar {
+        @apply flex-col gap-2;
+    }
+    .print-order-table th,
+    .print-order-table td {
+        @apply block w-full text-right;
+    }
+    .print-order-table th {
+        @apply hidden;
+    }
+    .print-order-table td {
+        @apply p-2 border-b-0;
+    }
+    .print-order-table tr {
+        @apply border-b border-gray-300 mb-2.5 block;
+    }
+    .accordion-row.active {
+        @apply block;
+    }
+	}
+
+  /* استایل جدید برای render_transaction_details */
+  .print-order-transaction-details {
+    @apply max-w-4xl mx-auto p-6 font-sans text-right;
+  }
+
+  .print-order-transaction-details .card {
+    @apply bg-white border border-gray-300 rounded-lg p-4 mb-6;
+  }
+
+  .print-order-transaction-details .print-order-table th {
+    @apply p-2 text-right bg-gray-100 font-semibold;
+  }
+
+  .print-order-transaction-details .print-order-table td {
+    @apply p-2 text-right;
+  }
+
+  .print-order-transaction-details .status-label {
+    @apply font-medium;
+  }
+
+  .print-order-transaction-details .text-green-600 {
+    color: #10b981;
+  }
+
+  .print-order-transaction-details .text-yellow-600 {
+    color: #d97706;
+  }
+
+  /* استایل‌های منتقل‌شده از user-dashboard.css */
+  .print-order-user-transactions .accordion-content {
+    @apply hidden w-full max-w-none p-1 bg-gray-50 border border-gray-200 rounded-lg mt-1;
+  }
+
+  .print-order-user-transactions .accordion-content.active {
+    @apply block;
+  }
+}
+
+@media (max-width: 768px) {
+  .print-order-user-transactions .print-order-table {
+    @apply table-auto;
+  }
+
+  .print-order-user-transactions .print-order-table th,
+  .print-order-user-transactions .print-order-table td {
+    @apply text-xs p-1 max-w-none;
+  }
+
+  .print-order-user-transactions .print-order-table th.order-number,
+  .print-order-user-transactions .print-order-table td.order-number {
+    @apply min-w-[60px];
+  }
+
+  .print-order-user-transactions .print-order-table th.date,
+  .print-order-user-transactions .print-order-table td.date {
+    @apply min-w-[80px];
+  }
+
+  .print-order-user-transactions .print-order-table th.product,
+  .print-order-user-transactions .print-order-table td.product {
+    @apply min-w-[100px];
+  }
+
+  .print-order-user-transactions .print-order-table th.amount,
+  .print-order-user-transactions .print-order-table td.amount {
+    @apply min-w-[60px];
+  }
+
+  .print-order-user-transactions .print-order-table th.status,
+  .print-order-user-transactions .print-order-table td.status {
+    @apply min-w-[60px];
+  }
+
+  .print-order-user-transactions .print-order-table th.actions,
+  .print-order-user-transactions .print-order-table td.actions {
+    @apply min-w-[90px];
+  }
+
+  .print-order-user-transactions .accordion-toggle,
+  .print-order-user-transactions .payment-button {
+    @apply text-xs p-1 px-2 mr-1;
+  }
+
+  .print-order-user-transactions .accordion-grid {
+    @apply grid-cols-1 gap-0 p-1 m-0;
+  }
+
+  .print-order-user-transactions .accordion-grid .item {
+    @apply flex flex-row items-center justify-between text-right w-full whitespace-nowrap;
+  }
+
+  .print-order-user-transactions .accordion-grid .item .label {
+    @apply w-auto text-right font-semibold text-gray-700 pr-2 flex-shrink-0 min-w-[100px];
+  }
+
+  .print-order-user-transactions .accordion-grid .item .value {
+    @apply flex-1 text-right text-gray-600 overflow-hidden;
+  }
+
+  .print-order-user-transactions .toolbar select {
+    @apply max-w-full;
+  }
+
+  .print-order-user-transactions .accordion-row.active {
+    @apply block w-full min-h-[200px];
+  }
+
+  .print-order-user-transactions .accordion-wrapper.active {
+    @apply block w-full max-w-none min-h-[200px] overflow-y-auto;
+  }
+
+  .print-order-user-transactions .card {
+    @apply overflow-visible;
+  }
+
+  /* استایل‌های رسپانسیو منتقل‌شده از user-dashboard.css */
+  .print-order-user-transactions .print-order-table {
+    @apply block overflow-x-auto;
+  }
+
+  .print-order-user-transactions .card,
+  .print-order-user-transactions .table-container {
+    @apply overflow-x-auto;
+  }
+
+  .print-order-user-transactions .toolbar {
+    @apply flex-col gap-2;
+  }
+
+  .print-order-user-transactions .toolbar select,
+  .print-order-user-transactions .toolbar button {
+    @apply w-full;
+  }
+
+  .print-order-user-transactions .print-order-table th,
+  .print-order-user-transactions .print-order-table td {
+    @apply min-w-[100px];
+  }
+
+  .print-order-user-transactions .accordion-grid {
+    @apply grid-cols-1;
+  }
+
+  .print-order-user-transactions .accordion-grid .item {
+    @apply flex-col items-end;
+  }
+
+  .print-order-user-transactions .accordion-grid .item .label {
+    @apply w-auto;
+  }
+}

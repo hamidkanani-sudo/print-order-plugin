@@ -1,0 +1,132 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* متغیرهای عمومی */
+:root {
+    --button-bg-color: #2563EB;
+    --button-text-color: #ffffff;
+}
+
+/* استایل‌های اصلی صفحه */
+.wrap {
+    @apply w-full p-6;
+}
+
+.print-order-wrap {
+    @apply w-full;
+}
+
+/* استایل تب‌ها */
+.settings-tabs {
+    @apply mb-6 flex border-b border-gray-200;
+}
+
+.tab-link {
+    @apply px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-t-lg transition-colors cursor-pointer;
+}
+
+.tab-link:hover {
+    @apply bg-gray-100;
+}
+
+.tab-link.active {
+    @apply bg-gray-100 text-blue-600 font-semibold;
+}
+
+/* استایل پنل‌ها */
+.tab-pane {
+    @apply mt-6;
+}
+
+.template-combinations-card {
+    @apply bg-white rounded-xl shadow-md p-6 w-full;
+}
+
+/* استایل جدول */
+.table-container {
+    @apply overflow-x-auto;
+}
+
+.print-order-table {
+    @apply w-full table-auto;
+}
+
+.sticky-header {
+    @apply sticky top-0 bg-blue-50;
+}
+
+.print-order-table th {
+    @apply px-2 py-3 text-center text-gray-900 font-semibold cursor-pointer hover:bg-gray-200 transition-colors;
+}
+
+.print-order-table td {
+    @apply px-2 py-3;
+}
+
+/* استایل دکمه‌ها */
+.add-row-container {
+    @apply flex justify-end mt-4;
+}
+
+.btn-primary {
+    @apply inline-flex px-6 py-3 bg-blue-600 text-white rounded-lg text-sm font-medium shadow-sm hover:bg-blue-700 transition-all duration-200 cursor-pointer !important;
+}
+
+.save-btn {
+    @apply inline-flex px-6 py-3 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors duration-200 hover:scale-105 cursor-pointer !important;
+}
+
+.duplicate-row {
+    @apply flex w-10 h-10 items-center justify-center bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-200 hover:scale-105 cursor-pointer border-none;
+}
+
+.remove-row {
+    @apply flex w-10 h-10 items-center justify-center bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-200 hover:scale-105 cursor-pointer border-none;
+}
+
+/* استایل کشویی دسته‌ها */
+.print-order-table select option {
+    @apply text-right;
+}
+
+.print-order-table select option[style*="padding-right"] {
+    padding-right: 1rem;
+}
+
+@media (max-width: 640px) {
+    .print-order-table {
+        @apply block;
+    }
+
+    .print-order-table thead {
+        @apply hidden;
+    }
+
+    .print-order-table tbody,
+    .print-order-table tr {
+        @apply block;
+    }
+
+    .print-order-table tr {
+        @apply mb-4 border border-gray-200 rounded-lg p-4 bg-white;
+    }
+
+    .print-order-table td {
+        @apply block py-2 text-right;
+    }
+
+    .print-order-table td:before {
+        content: attr(data-label);
+        @apply float-right mr-2 font-semibold text-gray-700;
+    }
+
+    .print-order-table td:last-child {
+        @apply flex justify-end gap-2;
+    }
+
+    .print-order-table select,
+    .print-order-table input {
+        @apply w-full max-w-[150px] flex-1;
+    }
+}

@@ -1,0 +1,136 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .accordion-item {
+        @apply border-b border-gray-200;
+    }
+
+    .accordion-item.parent-category {
+        @apply bg-blue-50 rounded-lg mb-2;
+    }
+
+    .accordion-item.child-category {
+        @apply bg-gray-50 mb-2 relative;
+    }
+
+    .accordion-button {
+        @apply flex justify-between items-center w-full px-4 py-3 text-right text-gray-800 font-semibold hover:bg-gray-100 transition-all;
+    }
+
+    .accordion-button.parent-category {
+        @apply font-bold bg-blue-100;
+    }
+
+    .accordion-button.child-category {
+        @apply font-normal pr-8;
+    }
+
+    .accordion-content {
+        @apply px-4 py-2 bg-gray-50;
+    }
+
+    .category-fields-table {
+        @apply w-full border-collapse;
+    }
+
+    .category-fields-table thead {
+        @apply bg-[var(--wp-admin-theme-color-darker)] text-gray-900 rounded-tl-lg rounded-tr-lg;
+    }
+
+    .category-fields-table th {
+        @apply px-4 py-3 text-right text-gray-900 font-semibold cursor-pointer hover:bg-gray-200 transition-colors;
+    }
+
+    .category-fields-table tbody tr {
+        @apply bg-white border-b border-gray-200 will-change-transform;
+    }
+
+    .category-fields-table td {
+        @apply px-4 py-3;
+    }
+
+    .category-fields-table input,
+    .category-fields-table select {
+        @apply w-full border p-2 rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500 text-right will-change-transform;
+    }
+
+    .category-fields-table input[type="checkbox"] {
+        @apply w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500;
+    }
+
+    .field-count {
+        @apply bg-gray-200 text-gray-700 rounded-full px-2 py-1 text-xs mr-2;
+    }
+
+    .add-field-btn {
+        @apply inline-flex px-6 py-3 bg-green-500 text-white rounded-lg text-sm font-medium shadow-sm hover:bg-green-600 transition-all duration-200 cursor-pointer !important;
+    }
+
+    .delete-field-btn {
+        @apply flex w-10 h-10 items-center justify-center bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-200 hover:scale-105 cursor-pointer border-none;
+    }
+
+    .category-fields-card {
+        @apply bg-white rounded-xl shadow-md p-6 w-full;
+    }
+}
+
+@layer base {
+    .accordion-item.child-category::before {
+        content: '';
+        @apply absolute top-0 right-4 w-px h-full bg-gray-300;
+    }
+
+    .accordion-item.child-category::after {
+        content: '';
+        @apply absolute top-6 right-4 w-4 h-px bg-gray-300;
+    }
+
+    .accordion-button.child-category::before {
+        content: '+';
+        @apply absolute top-1/2 right-2 text-gray-500 font-bold transform -translate-y-1/2;
+    }
+
+    .accordion-button.child-category.rotate-180::before {
+        content: '−';
+    }
+}
+
+@media (max-width: 640px) {
+    .category-fields-table {
+        @apply block;
+    }
+
+    .category-fields-table thead {
+        @apply hidden;
+    }
+
+    .category-fields-table tbody,
+    .category-fields-table tr {
+        @apply block;
+    }
+
+    .category-fields-table tr {
+        @apply mb-4 border border-gray-200 rounded-lg p-4 bg-white;
+    }
+
+    .category-fields-table td {
+        @apply block py-2 text-right;
+    }
+
+    .category-fields-table td:before {
+        content: attr(data-label);
+        @apply float-right mr-2 font-semibold text-gray-700;
+    }
+
+    .category-fields-table td:last-child {
+        @apply flex justify-end gap-2;
+    }
+
+    .category-fields-table input,
+    .category-fields-table select {
+        @apply w-full max-w-[150px] flex-1;
+    }
+}

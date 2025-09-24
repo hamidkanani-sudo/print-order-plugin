@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .docs-card {
+        @apply bg-white rounded-xl shadow-md p-6 w-full;
+    }
+
+    .docs-card table {
+        @apply w-full border-collapse;
+    }
+
+    .docs-card thead {
+        @apply bg-[var(--wp-admin-theme-color-darker)] text-gray-900 rounded-tl-lg rounded-tr-lg;
+    }
+
+    .docs-card th {
+        @apply px-4 py-2 text-right text-gray-900 font-semibold cursor-pointer hover:bg-gray-200 transition-colors;
+    }
+
+    .docs-card tbody tr {
+        @apply bg-white border-b border-gray-200 will-change-transform;
+    }
+
+    .docs-card td {
+        @apply px-4 py-2 text-gray-600;
+    }
+
+    .docs-card ul {
+        @apply list-disc pr-6;
+    }
+
+    .docs-card li {
+        @apply text-gray-600 mb-2;
+    }
+}
+
+@layer utilities {
+    /* تنظیمات اضافی در صورت نیاز */
+}
+
+@media (max-width: 640px) {
+    .docs-card table {
+        @apply block;
+    }
+
+    .docs-card thead {
+        @apply hidden;
+    }
+
+    .docs-card tbody,
+    .docs-card tr {
+        @apply block;
+    }
+
+    .docs-card tr {
+        @apply mb-4 border border-gray-200 rounded-lg p-4 bg-white;
+    }
+
+    .docs-card td {
+        @apply block py-2 text-right;
+    }
+
+    .docs-card td:before {
+        content: attr(data-label);
+        @apply float-right mr-2 font-semibold text-gray-700;
+    }
+}

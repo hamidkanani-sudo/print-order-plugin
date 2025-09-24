@@ -1,0 +1,280 @@
+/* استایل‌های پنل مدیریت */
+.table-container {
+    @apply overflow-x-auto;
+}
+
+.toolbar {
+    @apply flex items-center mb-6 sm:flex-row sm:gap-4;
+}
+
+.toolbar .csv-buttons {
+    @apply flex gap-[10px] mr-auto;
+}
+
+.btn-primary {
+    @apply inline-flex px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium shadow-sm hover:bg-blue-700 transition-all duration-200 !important;
+}
+
+.btn-secondary {
+    @apply inline-flex px-4 py-1.5 bg-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-400 transition-all duration-200 !important;
+}
+
+.upload-label {
+    @apply cursor-pointer px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300 transition-all duration-200;
+}
+
+.download-btn {
+    @apply inline-flex px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300 transition-all duration-200;
+}
+
+.print-order-table {
+    @apply w-full table-auto;
+}
+
+.print-order-table thead {
+    @apply bg-blue-50;
+}
+
+.sticky-header {
+    @apply sticky top-0 z-10 bg-blue-50 will-change-transform;
+}
+
+.print-order-table th {
+    @apply px-2 py-3 text-center text-gray-700 font-semibold cursor-pointer hover:bg-blue-100 transition-colors;
+}
+
+.print-order-table th.sorted-asc::after {
+    content: ' ↑';
+    @apply text-blue-600;
+}
+
+.print-order-table th.sorted-desc::after {
+    content: ' ↓';
+    @apply text-blue-600;
+}
+
+.print-order-table tbody tr {
+    @apply bg-white border-b border-gray-200 will-change-transform;
+}
+
+.print-order-table td {
+    @apply px-2 py-3;
+}
+
+/*مدیریت قیمت گذاری*/
+.print-order-table th:nth-child(1),
+.print-order-table td:nth-child(1) {
+    @apply min-w-[200px] max-w-[250px];
+}
+
+.print-order-table th:nth-child(2),
+.print-order-table td:nth-child(2) {
+    @apply min-w-[150px] max-w-[200px];
+}
+
+.print-order-table th:nth-child(3),
+.print-order-table td:nth-child(3) {
+    @apply min-w-[100px] max-w-[150px];
+}
+
+.print-order-table th:nth-child(4),
+.print-order-table td:nth-child(4) {
+    @apply min-w-[100px] max-w-[120px];
+}
+
+.print-order-table th:nth-child(5),
+.print-order-table td:nth-child(5) {
+    @apply min-w-[60px] max-w-[80px];
+}
+
+.print-order-table th:nth-child(6),
+.print-order-table td:nth-child(6) {
+    @apply min-w-[80px] max-w-[100px];
+}
+
+.print-order-table th:nth-child(7),
+.print-order-table td:nth-child(7) {
+    @apply min-w-[80px] max-w-[120px];
+}
+
+.print-order-table th:nth-child(8),
+.print-order-table td:nth-child(8) {
+    @apply min-w-[40px] max-w-[40px];
+}
+
+.print-order-table th:nth-child(9),
+.print-order-table td:nth-child(9) {
+    @apply min-w-[80px] max-w-[100px];
+}
+
+.print-order-table input,
+.print-order-table select {
+    @apply w-full border p-2 rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500 will-change-transform;
+}
+
+.print-order-table input.price-input {
+    @apply text-right;
+}
+
+.actions {
+    @apply flex gap-2;
+}
+
+.duplicate-row {
+    @apply flex w-10 h-10 items-center justify-center bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-200 hover:scale-105 cursor-pointer;
+}
+
+.remove-row {
+    @apply flex w-10 h-10 items-center justify-center bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-200 hover:scale-105 cursor-pointer;
+}
+
+.save-btn {
+    @apply inline-flex px-6 py-3 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors duration-200 hover:scale-105;
+}
+
+/* استایل‌های اختصاصی مدیریت */
+@layer components {
+    .print-order-details {
+        @apply max-w-6xl mx-auto !important;
+    }
+    .print-order-details .card {
+        @apply bg-white rounded-xl shadow-md p-6 mb-6 !important;
+    }
+}
+
+/* استایل‌های آکاردئون و تعداد فیلدها */
+.accordion-item.parent-category {
+    @apply bg-blue-50 rounded-lg mb-2;
+}
+
+.accordion-item.child-category {
+    @apply bg-gray-50 mb-2 relative;
+}
+
+.accordion-button.parent-category {
+    @apply font-bold bg-blue-100;
+}
+
+.accordion-button.child-category {
+    @apply font-normal pr-8;
+}
+
+/* دایره تعداد فیلدها */
+.field-count {
+    @apply bg-gray-200 text-gray-700 rounded-full px-2 py-1 text-xs mr-2;
+}
+
+/* ساختار درختی برای زیرمجموعه‌ها */
+.accordion-item.child-category::before {
+    content: '';
+    @apply absolute top-0 right-4 w-px h-full bg-gray-300;
+}
+
+.accordion-item.child-category::after {
+    content: '';
+    @apply absolute top-6 right-4 w-4 h-px bg-gray-300;
+}
+
+.accordion-button.child-category::before {
+    content: '+';
+    @apply absolute top-1/2 right-2 text-gray-500 font-bold transform -translate-y-1/2;
+}
+
+.accordion-button.child-category.rotate-180::before {
+    content: '−';
+}
+
+/* رسپانسیو */
+@media (max-width: 640px) {
+    .print-order-table {
+        @apply block;
+    }
+
+    .print-order-table thead {
+        @apply hidden;
+    }
+
+    .print-order-table tbody,
+    .print-order-table tr {
+        @apply block;
+    }
+
+    .print-order-table tr {
+        @apply mb-4 border border-gray-200 rounded-lg p-4 bg-white;
+    }
+
+    .print-order-table td {
+        @apply block py-2 text-right;
+    }
+
+    .print-order-table td:before {
+        content: attr(data-label);
+        @apply float-right mr-2 font-semibold text-gray-700;
+    }
+
+    .print-order-table td:last-child {
+        @apply flex justify-end gap-2;
+    }
+
+    .print-order-table input,
+    .print-order-table select {
+        @apply w-full max-w-[150px];
+    }
+}
+
+/* متغیرهای عمومی */
+:root {
+    --button-bg-color: #2563EB;
+    --button-text-color: #ffffff;
+}
+
+/* ریست CSS و تنظیمات پایه */
+@layer base {
+    .wrap,
+    .wrap *:not(.order-form *) {
+        box-sizing: border-box;
+        margin: 0 !important;
+        max-width: none !important;
+    }
+    body.admin-bar {
+        direction: rtl;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+}
+
+body,
+html,
+* {
+    direction: rtl;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.wrap {
+    @apply bg-gray-100 min-h-screen p-6 w-full max-w-none !important;
+}
+
+.max-w-6xl {
+    @apply max-w-full mx-auto !important;
+}
+
+/* استایل‌های عمومی پیام‌ها */
+.updated {
+    @apply bg-green-100 text-green-600 p-4 rounded-lg mb-6;
+}
+
+.error {
+    @apply bg-red-100 text-red-600 p-4 rounded-lg mb-6;
+}
+
+.form-loading {
+    @apply text-center text-gray-500 text-lg py-8;
+}
+
+.form-error {
+    @apply text-center text-red-600 p-4 bg-red-100 rounded-lg my-4;
+}
+
+/* خط جداکننده */
+.separator {
+    @apply my-4 border-t border-gray-300;
+}
