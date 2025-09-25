@@ -15,31 +15,31 @@
         }
         isInitialized = true;
 
-        if (!window.React || !window.ReactDOM) {
+        if (!globalThis.React || !globalThis.ReactDOM) {
             console.error('PrintOrderWidget: React or ReactDOM not loaded');
             return;
         }
 
-        if (!window.printOrderWidget) {
+        if (!globalThis.printOrderWidget) {
             console.error('PrintOrderWidget: printOrderWidget is not defined');
             return;
         }
 
         // Ensure PrintOrderForm is loaded
-        if (!window.PrintOrderForm || !window.PrintOrderFormLoaded || !window.PrintOrderForm.PrintOrderForm) {
+        if (!globalThis.PrintOrderForm || !globalThis.PrintOrderFormLoaded || !globalThis.PrintOrderForm.PrintOrderForm) {
             console.error('PrintOrderWidget: PrintOrderForm or PrintOrderForm.PrintOrderForm not loaded');
             return;
         }
 
         // Override setupGuideDrawer to disable mobile guide drawer
-        window.PrintOrderForm.guideDrawer = window.PrintOrderForm.guideDrawer || {};
-        window.PrintOrderForm.guideDrawer.setupGuideDrawer = () => {};
+        globalThis.PrintOrderForm.guideDrawer = globalThis.PrintOrderForm.guideDrawer || {};
+        globalThis.PrintOrderForm.guideDrawer.setupGuideDrawer = () => {};
 
         // Set product_id for editor preview
-        if (window.printOrderWidget.is_editor && window.printOrderWidget.product_id) {
-            const url = new URL(window.location.href);
-            url.searchParams.set('product_id', window.printOrderWidget.product_id);
-            window.history.replaceState({}, '', url.toString());
+        if (globalThis.printOrderWidget.is_editor && globalThis.printOrderWidget.product_id) {
+            const url = new URL(globalThis.location.href);
+            url.searchParams.set('product_id', globalThis.printOrderWidget.product_id);
+            globalThis.history.replaceState({}, '', url.toString());
         }
     }
 
@@ -53,7 +53,7 @@
             return;
         }
         setTimeout(() => {
-            if (document.getElementById('print-order-form') && window.PrintOrderForm?.PrintOrderForm && window.printOrderWidget) {
+            if (document.getElementById('print-order-form') && globalThis.PrintOrderForm?.PrintOrderForm && globalThis.printOrderWidget) {
                 initializeWidget();
             } else {
                 console.warn(`PrintOrderWidget: DOM, PrintOrderForm, or printOrderWidget not ready, retrying (${attempts - 1} attempts left)`);
