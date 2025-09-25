@@ -3,6 +3,10 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
 }
 
+// Define constants for repeated strings
+define('UNKNOWN_VALUE', 'نامشخص');
+define('ORDER_STATUS_TEXT', 'Order status');
+
 class Print_Order_WooCommerce {
     public function __construct() {
         // Remove WooCommerce add to cart buttons
@@ -21,15 +25,15 @@ class Print_Order_WooCommerce {
         // Ensure orders are displayed in admin
         add_filter('woocommerce_admin_order_query_args', [$this, 'ensure_orders_display_in_admin'], 10, 1);
         // Enforce custom status on payment completion
-        add_filter('woocommerce_payment_complete_order_status', [$this, 'custom_payment_complete_status'], 10, 3);
+        add_filter('woocommerce_payment_complete_order_status', [$this, 'custom_payment_complete_status'], 10, 0);
         // Track order status changes
-        add_action('woocommerce_order_status_changed', [$this, 'track_order_status_changes'], 10, 3);
+        add_action('woocommerce_order_status_changed', [$this, 'track_order_status_changes'], 10, 2);
         // Correct non-standard statuses
         add_action('woocommerce_order_status_changed', [$this, 'correct_non_standard_status'], 1000, 3);
     }
 
-    public function track_order_status_changes($order_id, $old_status, $new_status) {
-        error_log("Print Order: Order $order_id status changed from $old_status to $new_status");
+    public function track_order_status_changes($order_id, $new_status) {
+        error_log("Print Order: Order $order_id status changed to $new_status");
     }
 
     public function correct_non_standard_status($order_id, $old_status, $new_status) {
@@ -87,15 +91,15 @@ class Print_Order_WooCommerce {
             $order_data = $cart_item['_print_order_data'];
             $item_data[] = [
                 'key' => 'جنس کاغذ',
-                'value' => $order_data['paper_type_persian'] ?? 'نامشخص',
+                'value' => $order_data['paper_type_persian'] ?? UNKNOWN_VALUE,
             ];
             $item_data[] = [
                 'key' => 'سایز',
-                'value' => $order_data['size'] ?? 'نامشخص',
+                'value' => $order_data['size'] ?? UNKNOWN_VALUE,
             ];
             $item_data[] = [
                 'key' => 'تعداد',
-                'value' => $order_data['quantity'] ?? 'نامشخص',
+                'value' => $order_data['quantity'] ?? UNKNOWN_VALUE,
             ];
             $item_data[] = [
                 'key' => 'نوع چاپ',
@@ -132,13 +136,13 @@ class Print_Order_WooCommerce {
         }
     }
 
-    public function custom_payment_complete_status($status, $order_id, $order) {
+    public function custom_payment_complete_status() {
         return 'wc-payment-completed';
     }
 
     public function print_order_register_custom_statuses() {
         register_post_status('wc-order-registered', array(
-            'label'                     => _x('ثبت سفارش', 'Order status', 'print-order'),
+            'label'                     => _x('ثبت سفارش', ORDER_STATUS_TEXT, 'print-order'),
             'public'                    => true,
             'exclude_from_search'       => false,
             'show_in_admin_all_list'    => true,
@@ -147,7 +151,7 @@ class Print_Order_WooCommerce {
         ));
 
         register_post_status('wc-payment-completed', array(
-            'label'                     => _x('تکمیل پرداخت', 'Order status', 'print-order'),
+            'label'                     => _x('تکمیل پرداخت', ORDER_STATUS_TEXT, 'print-order'),
             'public'                    => true,
             'exclude_from_search'       => false,
             'show_in_admin_all_list'    => true,
@@ -156,7 +160,7 @@ class Print_Order_WooCommerce {
         ));
 
         register_post_status('wc-designing', array(
-            'label'                     => _x('طراحی', 'Order status', 'print-order'),
+            'label'                     => _x('طراحی', ORDER_STATUS_TEXT, 'print-order'),
             'public'                    => true,
             'exclude_from_search'       => false,
             'show_in_admin_all_list'    => true,
@@ -165,7 +169,7 @@ class Print_Order_WooCommerce {
         ));
 
         register_post_status('wc-design-approved', array(
-            'label'                     => _x('تایید طرح', 'Order status', 'print-order'),
+            'label'                     => _x('تایید طرح', ORDER_STATUS_TEXT, 'print-order'),
             'public'                    => true,
             'exclude_from_search'       => false,
             'show_in_admin_all_list'    => true,
@@ -174,7 +178,7 @@ class Print_Order_WooCommerce {
         ));
 
         register_post_status('wc-printing', array(
-            'label'                     => _x('در حال چاپ', 'Order status', 'print-order'),
+            'label'                     => _x('در حال چاپ', ORDER_STATUS_TEXT, 'print-order'),
             'public'                    => true,
             'exclude_from_search'       => false,
             'show_in_admin_all_list'    => true,
@@ -183,7 +187,7 @@ class Print_Order_WooCommerce {
         ));
 
         register_post_status('wc-shipping', array(
-            'label'                     => _x('در حال ارسال', 'Order status', 'print-order'),
+            'label'                     => _x('در حال ارسال', ORDER_STATUS_TEXT, 'print-order'),
             'public'                    => true,
             'exclude_from_search'       => false,
             'show_in_admin_all_list'    => true,
@@ -192,7 +196,7 @@ class Print_Order_WooCommerce {
         ));
 
         register_post_status('wc-order-completed', array(
-            'label'                     => _x('تکمیل سفارش', 'Order status', 'print-order'),
+            'label'                     => _x('تکمیل سفارش', ORDER_STATUS_TEXT, 'print-order'),
             'public'                    => true,
             'exclude_from_search'       => false,
             'show_in_admin_all_list'    => true,
@@ -203,22 +207,22 @@ class Print_Order_WooCommerce {
 
     public function print_order_custom_order_statuses($order_statuses) {
         $new_statuses = array(
-            'wc-order-registered'   => _x('ثبت سفارش', 'Order status', 'print-order'),
-            'wc-payment-completed'  => _x('تکمیل پرداخت', 'Order status', 'print-order'),
-            'wc-designing'          => _x('طراحی', 'Order status', 'print-order'),
-            'wc-design-approved'    => _x('تایید طرح', 'Order status', 'print-order'),
-            'wc-printing'           => _x('در حال چاپ', 'Order status', 'print-order'),
-            'wc-shipping'           => _x('در حال ارسال', 'Order status', 'print-order'),
-            'wc-order-completed'    => _x('تکمیل سفارش', 'Order status', 'print-order'),
+            'wc-order-registered'   => _x('ثبت سفارش', ORDER_STATUS_TEXT, 'print-order'),
+            'wc-payment-completed'  => _x('تکمیل پرداخت', ORDER_STATUS_TEXT, 'print-order'),
+            'wc-designing'          => _x('طراحی', ORDER_STATUS_TEXT, 'print-order'),
+            'wc-design-approved'    => _x('تایید طرح', ORDER_STATUS_TEXT, 'print-order'),
+            'wc-printing'           => _x('در حال چاپ', ORDER_STATUS_TEXT, 'print-order'),
+            'wc-shipping'           => _x('در حال ارسال', ORDER_STATUS_TEXT, 'print-order'),
+            'wc-order-completed'    => _x('تکمیل سفارش', ORDER_STATUS_TEXT, 'print-order'),
         );
 
         // Merge with existing statuses to preserve 'cancelled' and 'refunded'
-        $order_statuses = array_merge($new_statuses, array(
-            'wc-cancelled' => _x('لغو شده', 'Order status', 'woocommerce'),
-            'wc-refunded'  => _x('بازپرداخت شده', 'Order status', 'woocommerce'),
+        $merged_statuses = array_merge($new_statuses, array(
+            'wc-cancelled' => _x('لغو شده', ORDER_STATUS_TEXT, 'woocommerce'),
+            'wc-refunded'  => _x('بازپرداخت شده', ORDER_STATUS_TEXT, 'woocommerce'),
         ));
 
-        return $order_statuses;
+        return $merged_statuses;
     }
 
     public function migrate_old_order_statuses() {
@@ -280,4 +284,3 @@ class Print_Order_WooCommerce {
         return $query_args;
     }
 }
-?>
