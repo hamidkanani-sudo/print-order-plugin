@@ -15,6 +15,8 @@ if (!defined('ABSPATH')) {
 define('PRINT_ORDER_PATH', plugin_dir_path(__FILE__));
 define('PRINT_ORDER_URL', plugin_dir_url(__FILE__));
 define('PRINT_ORDER_TEMP_DIR', WP_CONTENT_DIR . '/Uploads/temp/');
+define('LOG_PREFIX', 'Print Order: Table creation attempted for ');
+define('LOG_RESULT_SUFFIX', ', Result: ');
 
 // Function to create database tables
 function print_order_create_tables() {
@@ -73,15 +75,15 @@ function print_order_create_tables() {
         UNIQUE KEY unique_code (code)
     ) $charset_collate;";
 
-    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+    require_once ABSPATH . 'wp-admin/includes/upgrade.php';
     $result_pricing = dbDelta($sql_pricing);
     $result_template = dbDelta($sql_template);
     $result_discount = dbDelta($sql_discount);
 
     if (defined('WP_DEBUG') && WP_DEBUG) {
-        error_log('Print Order: Table creation attempted for ' . $table_name_pricing . ', Result: ' . print_r($result_pricing, true));
-        error_log('Print Order: Table creation attempted for ' . $table_name_template . ', Result: ' . print_r($result_template, true));
-        error_log('Print Order: Table creation attempted for ' . $table_name_discount . ', Result: ' . print_r($result_discount, true));
+        error_log(LOG_PREFIX . $table_name_pricing . LOG_RESULT_SUFFIX . print_r($result_pricing, true));
+        error_log(LOG_PREFIX . $table_name_template . LOG_RESULT_SUFFIX . print_r($result_template, true));
+        error_log(LOG_PREFIX . $table_name_discount . LOG_RESULT_SUFFIX . print_r($result_discount, true));
         if ($wpdb->last_error) {
             error_log('Print Order: Database error during table creation: ' . $wpdb->last_error);
         }
@@ -162,13 +164,9 @@ require_once PRINT_ORDER_PATH . 'includes/class-discount-codes.php';
 // Initialize plugin classes
 class Print_Order {
     private $order_form;
-    private $pricing;
-    private $template_combinations;
 
     public function __construct() {
         $this->order_form = new Print_Order_Form();
-        // $this->pricing = new Print_Order_Pricing(); // کامنت شده
-        // $this->template_combinations = new Print_Order_Template_Combinations(); // کامنت شده
         $this->register_scripts();
     }
 
@@ -442,7 +440,7 @@ if (!function_exists('print_order_init')) {
         if (defined('WP_DEBUG') && WP_DEBUG) {
             error_log('Print Order: Plugin loaded');
         }
-        $print_order = new Print_Order();
+        new Print_Order();
         new Print_Order_Elementor_Widgets();
         new Print_Order_WooCommerce();
         new Print_Order_Settings();
@@ -469,4 +467,3 @@ add_action('admin_init', function() {
         wp_die('Table creation attempted. Check debug.log for details.');
     }
 });
-?>
