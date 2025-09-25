@@ -1,45 +1,45 @@
 (function () {
-    if (window.PrintOrderFormLoaded) {
+    if (globalThis.PrintOrderFormLoaded) {
         return;
     }
-    window.PrintOrderFormLoaded = true;
+    globalThis.PrintOrderFormLoaded = true;
 
     // بررسی وجود وابستگی‌های اصلی
     const checkDependencies = () => {
-        if (!window.React || !window.ReactDOM) {
+        if (!globalThis.React || !globalThis.ReactDOM) {
             console.error('PrintOrderForm: React or ReactDOM not loaded');
             return false;
         }
-        if (!window.React?.version.startsWith('18.3.1') || !window.ReactDOM?.version.startsWith('18.3.1')) {
-            console.error('PrintOrderForm: Incorrect React/ReactDOM version detected. Expected 18.3.1, got:', window.React?.version, window.ReactDOM?.version);
+        if (!globalThis.React?.version?.startsWith('18.3.1') || !globalThis.ReactDOM?.version?.startsWith('18.3.1')) {
+            console.error('PrintOrderForm: Incorrect React/ReactDOM version detected. Expected 18.3.1, got:', globalThis.React?.version, globalThis.ReactDOM?.version);
             return false;
         }
-        if (!window.PrintOrderForm || !window.PrintOrderForm.formState || !window.PrintOrderForm.dataFetching) {
+        if (!globalThis.PrintOrderForm || !globalThis.PrintOrderForm.formState || !globalThis.PrintOrderForm.dataFetching) {
             console.error('PrintOrderForm: Required dependencies (formState, dataFetching, etc.) not loaded');
             return false;
         }
-        if (!window.printOrderWidget) {
+        if (!globalThis.printOrderWidget) {
             console.error('PrintOrderForm: printOrderWidget is not defined');
             return false;
         }
         return true;
     };
 
-    const { useState, useEffect, memo } = window.React || {};
-    const { createRoot } = window.ReactDOM || {};
-    const { useFormState } = window.PrintOrderForm?.formState || {};
-    const { fetchProduct, fetchTemplateShortcode, fetchStageTemplate, handleSubmit } = window.PrintOrderForm?.dataFetching || {};
-    const { nextStep, prevStep } = window.PrintOrderForm?.stepNavigation || {};
-    const { renderInstantPrice, renderDeliveryDays } = window.PrintOrderForm?.uiRendering || {};
-    const { setupEventHandlers } = window.PrintOrderForm?.eventHandlers || {};
-    const useCustomFields = window.PrintOrderForm?.customFields?.useCustomFields || (() => []);
-    const { calculatePricing } = window.PrintOrderForm?.formPricing || {};
-    const { useUserAddress } = window.PrintOrderForm?.userAddress || {};
-    const { sidesMapping, handleInputChange } = window.PrintOrderForm?.utils || {};
-    const { renderStepOne } = window.PrintOrderForm?.stepOne || {};
-    const { StepTwo } = window.PrintOrderForm?.stepTwo || {};
-    const { StepThree } = window.PrintOrderForm?.stepThree || {};
-    const { StepFour } = window.PrintOrderForm?.stepFour || {};
+    const { useState, useEffect, memo } = globalThis.React || {};
+    const { createRoot } = globalThis.ReactDOM || {};
+    const { useFormState } = globalThis.PrintOrderForm?.formState || {};
+    const { fetchProduct, fetchTemplateShortcode, fetchStageTemplate, handleSubmit } = globalThis.PrintOrderForm?.dataFetching || {};
+    const { nextStep, prevStep } = globalThis.PrintOrderForm?.stepNavigation || {};
+    const { renderInstantPrice, renderDeliveryDays } = globalThis.PrintOrderForm?.uiRendering || {};
+    const { setupEventHandlers } = globalThis.PrintOrderForm?.eventHandlers || {};
+    const useCustomFields = globalThis.PrintOrderForm?.customFields?.useCustomFields || (() => []);
+    const { calculatePricing } = globalThis.PrintOrderForm?.formPricing || {};
+    const { useUserAddress } = globalThis.PrintOrderForm?.userAddress || {};
+    const { sidesMapping, handleInputChange } = globalThis.PrintOrderForm?.utils || {};
+    const { renderStepOne } = globalThis.PrintOrderForm?.stepOne || {};
+    const { StepTwo } = globalThis.PrintOrderForm?.stepTwo || {};
+    const { StepThree } = globalThis.PrintOrderForm?.stepThree || {};
+    const { StepFour } = globalThis.PrintOrderForm?.stepFour || {};
 
     const provincesMap = {
         'تهران': 'THR',
@@ -133,12 +133,12 @@
     );
 
     const PrintOrderForm = memo(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const productId = urlParams.get('product_id') || window.printOrderWidget?.product_id || null;
-        const { ajax_url, nonce, pricing, category_fields, options, temp_id } = window.printOrder || {};
-        const { is_editor, preview_step } = window.printOrderWidget || {};
+        const urlParams = new URLSearchParams(globalThis.location.search);
+        const productId = urlParams.get('product_id') || globalThis.printOrderWidget?.product_id || null;
+        const { ajax_url, nonce, pricing, category_fields, options, temp_id } = globalThis.printOrder || {};
+        const { is_editor, preview_step } = globalThis.printOrderWidget || {};
 
-        if (!window.printOrderWidget) {
+        if (!globalThis.printOrderWidget) {
             console.error('PrintOrderForm: printOrderWidget is not defined');
             return React.createElement(
                 'div',
@@ -176,7 +176,7 @@
                 .then(data => {
                     if (data.success && data.data.temp_id) {
                         setLocalTempId(data.data.temp_id);
-                        window.printOrder.temp_id = data.data.temp_id;
+                        globalThis.printOrder.temp_id = data.data.temp_id;
                     } else {
                         console.error('fetchNewTempId: Failed to fetch temp_id:', data);
                         setError('خطا در دریافت شناسه موقت');
@@ -205,10 +205,7 @@
             loading, setLoading,
             submitting, setSubmitting,
             currentStep, setCurrentStep,
-            shortcodeContent, setShortcodeContent,
-            loadingTemplate, setLoadingTemplate,
             formData, setFormData,
-            printPrice, setPrintPrice,
             taxAmount, setTaxAmount,
             totalPrice, setTotalPrice,
             deliveryDays, setDeliveryDays,
@@ -218,11 +215,11 @@
 
         // بررسی زمان‌بندی برای لود StepFour
         useEffect(() => {
-            if (currentStep === 4 && !window.PrintOrderForm?.stepFour?.StepFour) {
+            if (currentStep === 4 && !globalThis.PrintOrderForm?.stepFour?.StepFour) {
                 console.warn('StepFour not available, waiting for it to load...');
                 setLoading(true);
                 const checkStepFour = setInterval(() => {
-                    if (window.PrintOrderForm?.stepFour?.StepFour) {
+                    if (globalThis.PrintOrderForm?.stepFour?.StepFour) {
                         setLoading(false);
                         clearInterval(checkStepFour);
                     }
@@ -231,21 +228,19 @@
             }
         }, [currentStep]);
 
-        const initialStep = is_editor && preview_step ? parseInt(preview_step, 10) : 1;
+        const initialStep = is_editor && preview_step ? Number.parseInt(preview_step, 10) : 1;
         useEffect(() => {
             setCurrentStep(initialStep);
         }, [initialStep]);
 
-        const [usedCategoryIds, setUsedCategoryIds] = useState([]);
-        const { userInfo, provinces, billingCities, shippingCities } = useUserAddress(currentStep, ajax_url, nonce, formData, setFormData);
-        const allCustomFields = useCustomFields(product, category_fields, setUsedCategoryIds);
+        const allCustomFields = useCustomFields(product, category_fields);
         const subCategory = product?.categories?.find(cat => cat.parent !== 0)?.name || product?.category_name || 'نامشخص';
 
         useEffect(() => {
             const event = new CustomEvent('printOrderFormStateChange', {
                 detail: { currentStep, formData, product },
             });
-            window.dispatchEvent(event);
+            globalThis.dispatchEvent(event);
         }, [currentStep, formData, product]);
 
         useEffect(() => {
@@ -259,7 +254,7 @@
         }, [productId, ajax_url, nonce]);
 
         const handleNextStep = () => {
-            const isPrintRequired = product && !product.no_print && !formData.no_print_needed;
+            const isPrintRequired = product?.no_print ? false : !formData.no_print_needed;
             
             if (currentStep === 1 && !isPrintRequired) {
                 setStepError('');
@@ -271,7 +266,7 @@
         };
 
         useEffect(() => {
-            if (product && product.no_print && currentStep === 1 && !is_editor) {
+            if (product?.no_print && currentStep === 1 && !is_editor) {
                 handleNextStep();
             }
         }, [product, currentStep, is_editor]);
@@ -327,7 +322,7 @@
             if (currentStep === 4) {
                 let requiredFields = ['customer_name', 'customer_lastname', 'customer_email', 'customer_phone', 'billing_state', 'billing_city', 'billing_address'];
                 
-                if (product && !product.no_print && !formData.no_print_needed) {
+                if (product?.no_print ? false : !formData.no_print_needed) {
                     requiredFields.push('paper_type_persian', 'size', 'quantity', 'sides');
                 }
                 
@@ -400,20 +395,20 @@
         const categoryId = product?.category_id || '';
         const categoryName = product?.category_name || 'نامشخص';
         const paperTypesPersian = categoryId && pricing[categoryId]
-            ? [...new Set(pricing[categoryId].filter(item => item.paper_type_persian).map(item => item.paper_type_persian))].filter(Boolean).sort()
+            ? [...new Set(pricing[categoryId].filter(item => item.paper_type_persian).map(item => item.paper_type_persian))].filter(Boolean).sort((a, b) => a.localeCompare(b))
             : [];
         const sizes = categoryId && pricing[categoryId] && formData.paper_type_persian
-            ? [...new Set(pricing[categoryId].filter(item => item.paper_type_persian === formData.paper_type_persian).map(item => item.size))].filter(Boolean).sort()
+            ? [...new Set(pricing[categoryId].filter(item => item.paper_type_persian === formData.paper_type_persian).map(item => item.size))].filter(Boolean).sort((a, b) => a.localeCompare(b))
             : [];
         const quantities = categoryId && formData.paper_type_persian && formData.size && pricing[categoryId]
             ? [...new Set(pricing[categoryId].filter(item => item.paper_type_persian === formData.paper_type_persian && item.size === formData.size).map(item => String(item.quantity)))].sort((a, b) => Number(a) - Number(b))
             : [];
         const sidesOptions = categoryId && formData.paper_type_persian && formData.size && formData.quantity && pricing[categoryId]
-            ? [...new Set(pricing[categoryId].filter(item => item.paper_type_persian === formData.paper_type_persian && item.size === formData.size && String(item.quantity) === String(formData.quantity)).map(item => item.sides))].sort()
+            ? [...new Set(pricing[categoryId].filter(item => item.paper_type_persian === formData.paper_type_persian && item.size === formData.size && String(item.quantity) === String(formData.quantity)).map(item => item.sides))].sort((a, b) => a.localeCompare(b))
             : [];
         const hasValidPricing = paperTypesPersian.length > 0;
 
-        if (currentStep === 1 && !hasValidPricing && !product.no_print) {
+        if (currentStep === 1 && !hasValidPricing && !product?.no_print) {
             return React.createElement('div', { className: 'form-error text-red-500 p-4 bg-red-100 rounded-lg text-center mb-4' }, 'خطا: هیچ اطلاعات قیمت‌گذاری یافت نشد.');
         }
 
@@ -439,11 +434,11 @@
                     'div',
                     { className: 'progress-bar' },
                     [
-                        [{ label: 'نوع چاپ', step: 1 }, { label: 'اطلاعات طرح', step: 2 }, { label: 'آدرس', step: 3 }, { label: 'پرداخت', step: 4 }].map((item, index) =>
+                        [{ label: 'نوع چاپ', step: 1 }, { label: 'اطلاعات طرح', step: 2 }, { label: 'آدرس', step: 3 }, { label: 'پرداخت', step: 4 }].map((item) =>
                             React.createElement(
                                 'div',
                                 {
-                                    key: index,
+                                    key: item.step,
                                     className: `step ${currentStep >= item.step ? 'completed' : ''} ${currentStep === item.step ? 'active' : ''}`,
                                 },
                                 [
@@ -463,7 +458,7 @@
                             'div',
                             { className: 'flex items-start mb-2 border-b pb-4 flex-row' },
                             [
-                                product.image && React.createElement('img', {
+                                product?.image && React.createElement('img', {
                                     src: product.image,
                                     alt: product.name,
                                     className: 'w-24 h-24 object-contain rounded-lg mr-4',
@@ -714,15 +709,15 @@
         );
     });
 
-    window.PrintOrderForm = window.PrintOrderForm || {};
-    window.PrintOrderForm.PrintOrderForm = PrintOrderForm;
+    globalThis.PrintOrderForm = globalThis.PrintOrderForm || {};
+    globalThis.PrintOrderForm.PrintOrderForm = PrintOrderForm;
 
     function initializeForm() {
         const domContainer = document.getElementById('print-order-form');
-        if (domContainer && window.PrintOrderForm?.PrintOrderForm && checkDependencies()) {
+        if (domContainer && globalThis.PrintOrderForm?.PrintOrderForm && checkDependencies()) {
             const root = createRoot(domContainer);
             root.render(React.createElement(LoadingSpinner));
-            root.render(React.createElement(window.PrintOrderForm.PrintOrderForm));
+            root.render(React.createElement(globalThis.PrintOrderForm.PrintOrderForm));
         } else {
             console.error('PrintOrderForm: DOM container #print-order-form or dependencies not found');
             if (domContainer) {
@@ -742,7 +737,7 @@
             return;
         }
         setTimeout(() => {
-            if (document.getElementById('print-order-form') && window.PrintOrderForm?.PrintOrderForm && checkDependencies()) {
+            if (document.getElementById('print-order-form') && globalThis.PrintOrderForm?.PrintOrderForm && checkDependencies()) {
                 initializeForm();
             } else {
                 console.warn(`PrintOrderForm: DOM or dependencies not ready, retrying (${attempts - 1} attempts left)`);
