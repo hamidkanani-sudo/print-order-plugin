@@ -75,6 +75,36 @@
         'یزد': 'YSD',
     };
 
+    // توابع مقایسه سفارشی
+    const comparePaperTypes = (a, b) => {
+        // ترتیب الفبایی کنترل‌شده برای انواع کاغذ
+        const paperA = a.toLowerCase();
+        const paperB = b.toLowerCase();
+        return paperA < paperB ? -1 : paperA > paperB ? 1 : 0;
+    };
+
+    const compareSizes = (a, b) => {
+        // ترتیب استاندارد برای اندازه‌ها (مثل A3 > A4 > A5)
+        const sizePriority = ['A3', 'A4', 'A5', 'A6', 'B3', 'B4', 'B5', 'B6']; // اگر ترتیب دیگری مدنظرتونه، لطفاً مشخص کنید
+        const indexA = sizePriority.indexOf(a);
+        const indexB = sizePriority.indexOf(b);
+        if (indexA === -1 && indexB === -1) return a < b ? -1 : a > b ? 1 : 0; // اگر در لیست اولویت نیست، الفبایی مرتب کن
+        if (indexA === -1) return 1; // اگر A در لیست نیست، B اولویت داره
+        if (indexB === -1) return -1; // اگر B در لیست نیست، A اولویت داره
+        return indexA - indexB;
+    };
+
+    const compareSides = (a, b) => {
+        // ترتیب ثابت: یک‌طرفه > دو‌طرفه
+        const sidesPriority = ['یک‌طرفه', 'دو‌طرفه'];
+        const indexA = sidesPriority.indexOf(a);
+        const indexB = sidesPriority.indexOf(b);
+        if (indexA === -1 && indexB === -1) return a < b ? -1 : a > b ? 1 : 0; // اگر در لیست نیست، الفبایی مرتب کن
+        if (indexA === -1) return 1;
+        if (indexB === -1) return -1;
+        return indexA - indexB;
+    };
+
     const LoadingSpinner = () => React.createElement(
         'div',
         {
@@ -395,16 +425,16 @@
         const categoryId = product?.category_id || '';
         const categoryName = product?.category_name || 'نامشخص';
         const paperTypesPersian = categoryId && pricing[categoryId]
-            ? [...new Set(pricing[categoryId].filter(item => item.paper_type_persian).map(item => item.paper_type_persian))].filter(Boolean).sort((a, b) => a.localeCompare(b))
+            ? [...new Set(pricing[categoryId].filter(item => item.paper_type_persian).map(item => item.paper_type_persian))].filter(Boolean).sort(comparePaperTypes)
             : [];
         const sizes = categoryId && pricing[categoryId] && formData.paper_type_persian
-            ? [...new Set(pricing[categoryId].filter(item => item.paper_type_persian === formData.paper_type_persian).map(item => item.size))].filter(Boolean).sort((a, b) => a.localeCompare(b))
+            ? [...new Set(pricing[categoryId].filter(item => item.paper_type_persian === formData.paper_type_persian).map(item => item.size))].filter(Boolean).sort(compareSizes)
             : [];
         const quantities = categoryId && formData.paper_type_persian && formData.size && pricing[categoryId]
             ? [...new Set(pricing[categoryId].filter(item => item.paper_type_persian === formData.paper_type_persian && item.size === formData.size).map(item => String(item.quantity)))].sort((a, b) => Number(a) - Number(b))
             : [];
         const sidesOptions = categoryId && formData.paper_type_persian && formData.size && formData.quantity && pricing[categoryId]
-            ? [...new Set(pricing[categoryId].filter(item => item.paper_type_persian === formData.paper_type_persian && item.size === formData.size && String(item.quantity) === String(formData.quantity)).map(item => item.sides))].sort((a, b) => a.localeCompare(b))
+            ? [...new Set(pricing[categoryId].filter(item => item.paper_type_persian === formData.paper_type_persian && item.size === formData.size && String(item.quantity) === String(formData.quantity)).map(item => item.sides))].sort(compareSides)
             : [];
         const hasValidPricing = paperTypesPersian.length > 0;
 
