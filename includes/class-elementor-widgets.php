@@ -36,7 +36,7 @@ class Print_Order_Elementor_Widgets {
         $widgets_manager->register(new User_Transactions_Widget());
         $widgets_manager->register(new User_Profile_Settings_Widget());
         $widgets_manager->register(new \PrintOrder\Widgets\Order_Form_Widget());
-        $widgets_manager->register(new \PrintOrder\Widgets\Guide_Widget());
+        $widgets_manager->register(new \PrintOrder\Widgets\GuideWidget());
         $widgets_manager->register(new User_Orders_Progress_Bar_Widget());
     }
 
