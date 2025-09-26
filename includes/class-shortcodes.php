@@ -74,7 +74,22 @@ class Print_Order_Shortcodes {
         }
 
         $user_id = get_current_user_id();
-        $orders = wc_get_orders(['customer' => $user_id, 'limit' => -1]);
+        $custom_statuses = [
+            'wc-order-registered',
+            'wc-payment-completed',
+            'wc-designing',
+            'wc-design-approved',
+            'wc-printing',
+            'wc-shipping',
+            'wc-order-completed',
+            'wc-cancelled',
+            'wc-refunded',
+        ];
+        $orders = wc_get_orders([
+            'customer' => $user_id,
+            'limit' => -1,
+            'post_status' => $custom_statuses,
+        ]);
         $options = get_option('print_order_options', []);
         $max_revisions = intval($options['max_design_revisions'] ?? 3);
 
