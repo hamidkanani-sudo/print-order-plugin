@@ -216,7 +216,7 @@ class Print_Order_WooCommerce {
             'wc-order-completed'    => _x('تکمیل سفارش', ORDER_STATUS_TEXT, 'print-order'),
         );
 
-        // Merge with existing statuses to preserve 'cancelled' and 'refunded'
+        // تعریف متغیر جدید به‌جای تغییر مستقیم $order_statuses
         $merged_statuses = array_merge($new_statuses, array(
             'wc-cancelled' => _x('لغو شده', ORDER_STATUS_TEXT, 'woocommerce'),
             'wc-refunded'  => _x('بازپرداخت شده', ORDER_STATUS_TEXT, 'woocommerce'),

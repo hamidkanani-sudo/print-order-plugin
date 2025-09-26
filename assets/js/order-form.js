@@ -14,7 +14,7 @@
             console.error('PrintOrderForm: Incorrect React/ReactDOM version detected. Expected 18.3.1, got:', globalThis.React?.version, globalThis.ReactDOM?.version);
             return false;
         }
-        if (!globalThis.PrintOrderForm || !globalThis.PrintOrderForm.formState || !globalThis.PrintOrderForm.dataFetching) {
+        if (!globalThis.PrintOrderForm?.formState || !globalThis.PrintOrderForm?.dataFetching) {
             console.error('PrintOrderForm: Required dependencies (formState, dataFetching, etc.) not loaded');
             return false;
         }
@@ -85,12 +85,12 @@
 
     const compareSizes = (a, b) => {
         // ترتیب استاندارد برای اندازه‌ها (مثل A3 > A4 > A5)
-        const sizePriority = ['A3', 'A4', 'A5', 'A6', 'B3', 'B4', 'B5', 'B6']; // اگر ترتیب دیگری مدنظرتونه، لطفاً مشخص کنید
+        const sizePriority = ['A3', 'A4', 'A5', 'A6', 'B3', 'B4', 'B5', 'B6'];
         const indexA = sizePriority.indexOf(a);
         const indexB = sizePriority.indexOf(b);
-        if (indexA === -1 && indexB === -1) return a < b ? -1 : a > b ? 1 : 0; // اگر در لیست اولویت نیست، الفبایی مرتب کن
-        if (indexA === -1) return 1; // اگر A در لیست نیست، B اولویت داره
-        if (indexB === -1) return -1; // اگر B در لیست نیست، A اولویت داره
+        if (indexA === -1 && indexB === -1) return a < b ? -1 : a > b ? 1 : 0;
+        if (indexA === -1) return 1;
+        if (indexB === -1) return -1;
         return indexA - indexB;
     };
 
@@ -99,7 +99,7 @@
         const sidesPriority = ['یک‌طرفه', 'دو‌طرفه'];
         const indexA = sidesPriority.indexOf(a);
         const indexB = sidesPriority.indexOf(b);
-        if (indexA === -1 && indexB === -1) return a < b ? -1 : a > b ? 1 : 0; // اگر در لیست نیست، الفبایی مرتب کن
+        if (indexA === -1 && indexB === -1) return a < b ? -1 : a > b ? 1 : 0;
         if (indexA === -1) return 1;
         if (indexB === -1) return -1;
         return indexA - indexB;
@@ -177,7 +177,6 @@
             );
         }
 
-        // بررسی و دریافت temp_id جدید در صورت عدم وجود
         const [localTempId, setLocalTempId] = useState(temp_id);
 
         useEffect(() => {
@@ -243,7 +242,6 @@
             visibleItems, setVisibleItems,
         } = useFormState();
 
-        // بررسی زمان‌بندی برای لود StepFour
         useEffect(() => {
             if (currentStep === 4 && !globalThis.PrintOrderForm?.stepFour?.StepFour) {
                 console.warn('StepFour not available, waiting for it to load...');
@@ -302,24 +300,6 @@
         }, [product, currentStep, is_editor]);
 
         useEffect(() => {
-            if (currentStep === 1 && product && product.category_id) {
-                if (formData.paper_type_persian) {
-                    fetchTemplateShortcode(product.category_id, formData.paper_type_persian, ajax_url, nonce, setShortcodeContent, setLoadingTemplate);
-                } else {
-                    fetchTemplateShortcode(product.category_id, '', ajax_url, nonce, setShortcodeContent, setLoadingTemplate);
-                }
-            } else if (currentStep === 2) {
-                fetchStageTemplate('stage_2', ajax_url, nonce, setShortcodeContent, setLoadingTemplate);
-            } else if (currentStep === 3) {
-                fetchStageTemplate('stage_3_shipping', ajax_url, nonce, setShortcodeContent, setLoadingTemplate);
-            } else if (currentStep === 4) {
-                fetchStageTemplate('stage_3_payment', ajax_url, nonce, setShortcodeContent, setLoadingTemplate);
-            } else {
-                setShortcodeContent('<p class="text-gray-500 text-center p-4">لطفاً محصول را انتخاب کنید</p>');
-            }
-        }, [product, formData.paper_type_persian, currentStep]);
-
-        useEffect(() => {
             if (!product || !options) return;
 
             const modifiedOptions = { ...options };
@@ -333,7 +313,6 @@
                 pricing,
                 modifiedOptions,
                 currentStep,
-                setPrintPrice,
                 setDeliveryDays,
                 setTaxAmount,
                 setTotalPrice,
@@ -468,7 +447,7 @@
                             React.createElement(
                                 'div',
                                 {
-                                    key: item.step,
+                                    key: `step-${item.step}`,
                                     className: `step ${currentStep >= item.step ? 'completed' : ''} ${currentStep === item.step ? 'active' : ''}`,
                                 },
                                 [
@@ -602,7 +581,7 @@
                                 currentStep === 3 && React.createElement(StepThree, {
                                     formData,
                                     handleInputChange: (e) => handleInputChange(e, setFormData),
-                                    provinces,
+                                    provinces: Object.keys(provincesMap),
                                     renderInstantPrice,
                                     currentStep,
                                     product,
@@ -784,6 +763,4 @@
             attemptInitialization();
         });
     }
-
-    // حذف MutationObserver به دلیل عدم نیاز با روش جدید
 })();
