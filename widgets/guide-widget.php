@@ -8,14 +8,7 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
 }
 
-class GuideWidget extends Widget_Base {
-    // تعریف ثابت‌ها برای رشته‌های تکراری
-    const BUTTON_ICON_CONDITION = 'button_icon[value]!';
-    const BUTTON_BG_COLOR_DEFAULT = '#2563eb';
-    const BUTTON_TEXT_COLOR_DEFAULT = '#ffffff';
-    const GUIDE_TOGGLE_BUTTON_SELECTOR = '{{WRAPPER}} .guide-toggle-button';
-    const GUIDE_WIDGET_SELECTOR = '{{WRAPPER}} .guide-widget';
-
+class Guide_Widget extends Widget_Base {
     public function get_name() {
         return 'print-order-guide';
     }
@@ -148,7 +141,7 @@ class GuideWidget extends Widget_Base {
                     'right' => __('Right', 'print-order'),
                 ],
                 'condition' => [
-                    self::BUTTON_ICON_CONDITION => '',
+                    'button_icon[value]!' => '',
                 ],
             ]
         );
@@ -286,9 +279,9 @@ class GuideWidget extends Widget_Base {
             [
                 'label' => __('Background Color', 'print-order'),
                 'type' => Controls_Manager::COLOR,
-                'default' => self::BUTTON_BG_COLOR_DEFAULT,
+                'default' => '#2563eb',
                 'selectors' => [
-                    self::GUIDE_TOGGLE_BUTTON_SELECTOR => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} .guide-toggle-button' => 'background-color: {{VALUE}};',
                 ],
             ]
         );
@@ -298,9 +291,9 @@ class GuideWidget extends Widget_Base {
             [
                 'label' => __('Text Color', 'print-order'),
                 'type' => Controls_Manager::COLOR,
-                'default' => self::BUTTON_TEXT_COLOR_DEFAULT,
+                'default' => '#ffffff',
                 'selectors' => [
-                    self::GUIDE_TOGGLE_BUTTON_SELECTOR => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .guide-toggle-button' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -310,12 +303,12 @@ class GuideWidget extends Widget_Base {
             [
                 'label' => __('Icon Color', 'print-order'),
                 'type' => Controls_Manager::COLOR,
-                'default' => self::BUTTON_TEXT_COLOR_DEFAULT,
+                'default' => '#ffffff',
                 'selectors' => [
                     '{{WRAPPER}} .guide-toggle-button i' => 'color: {{VALUE}};',
                 ],
                 'condition' => [
-                    self::BUTTON_ICON_CONDITION => '',
+                    'button_icon[value]!' => '',
                 ],
             ]
         );
@@ -338,7 +331,7 @@ class GuideWidget extends Widget_Base {
                     'size' => 16,
                 ],
                 'selectors' => [
-                    self::GUIDE_TOGGLE_BUTTON_SELECTOR => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .guide-toggle-button' => 'font-size: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
@@ -358,7 +351,7 @@ class GuideWidget extends Widget_Base {
                     '900' => __('Extra Bold', 'print-order'),
                 ],
                 'selectors' => [
-                    self::GUIDE_TOGGLE_BUTTON_SELECTOR => 'font-weight: {{VALUE}};',
+                    '{{WRAPPER}} .guide-toggle-button' => 'font-weight: {{VALUE}};',
                 ],
             ]
         );
@@ -384,7 +377,7 @@ class GuideWidget extends Widget_Base {
                     '{{WRAPPER}} .guide-toggle-button i' => 'font-size: {{SIZE}}{{UNIT}};',
                 ],
                 'condition' => [
-                    self::BUTTON_ICON_CONDITION => '',
+                    'button_icon[value]!' => '',
                 ],
             ]
         );
@@ -411,7 +404,7 @@ class GuideWidget extends Widget_Base {
                     '{{WRAPPER}} .guide-toggle-button i.icon-right' => 'margin-right: {{SIZE}}{{UNIT}};',
                 ],
                 'condition' => [
-                    self::BUTTON_ICON_CONDITION => '',
+                    'button_icon[value]!' => '',
                 ],
             ]
         );
@@ -431,7 +424,7 @@ class GuideWidget extends Widget_Base {
                     'isLinked' => true,
                 ],
                 'selectors' => [
-                    self::GUIDE_TOGGLE_BUTTON_SELECTOR => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .guide-toggle-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -465,7 +458,7 @@ class GuideWidget extends Widget_Base {
                     'size' => 0,
                 ],
                 'selectors' => [
-                    self::GUIDE_TOGGLE_BUTTON_SELECTOR => 'border-width: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .guide-toggle-button' => 'border-width: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
@@ -475,9 +468,9 @@ class GuideWidget extends Widget_Base {
             [
                 'label' => __('Border Color', 'print-order'),
                 'type' => Controls_Manager::COLOR,
-                'default' => self::BUTTON_BG_COLOR_DEFAULT,
+                'default' => '#2563eb',
                 'selectors' => [
-                    self::GUIDE_TOGGLE_BUTTON_SELECTOR => 'border-color: {{VALUE}};',
+                    '{{WRAPPER}} .guide-toggle-button' => 'border-color: {{VALUE}};',
                 ],
                 'condition' => [
                     'button_border_width[size]!' => 0,
@@ -500,7 +493,7 @@ class GuideWidget extends Widget_Base {
                     'isLinked' => true,
                 ],
                 'selectors' => [
-                    self::GUIDE_TOGGLE_BUTTON_SELECTOR => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .guide-toggle-button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -520,7 +513,7 @@ class GuideWidget extends Widget_Base {
                     'isLinked' => false,
                 ],
                 'selectors' => [
-                    self::GUIDE_TOGGLE_BUTTON_SELECTOR => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .guide-toggle-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -593,7 +586,7 @@ class GuideWidget extends Widget_Base {
             [
                 'label' => __('Background Color', 'print-order'),
                 'type' => Controls_Manager::COLOR,
-                'default' => self::BUTTON_TEXT_COLOR_DEFAULT,
+                'default' => '#ffffff',
                 'selectors' => [
                     '{{WRAPPER}} .guide-slide' => 'background-color: {{VALUE}};',
                 ],
@@ -666,7 +659,7 @@ class GuideWidget extends Widget_Base {
                 ],
                 'default' => 'right',
                 'selectors' => [
-                    self::GUIDE_WIDGET_SELECTOR => 'text-align: {{VALUE}};',
+                    '{{WRAPPER}} .guide-widget' => 'text-align: {{VALUE}};',
                 ],
             ]
         );
@@ -686,7 +679,7 @@ class GuideWidget extends Widget_Base {
                     'isLinked' => true,
                 ],
                 'selectors' => [
-                    self::GUIDE_WIDGET_SELECTOR => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .guide-widget' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -706,7 +699,7 @@ class GuideWidget extends Widget_Base {
                     'isLinked' => true,
                 ],
                 'selectors' => [
-                    self::GUIDE_WIDGET_SELECTOR => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .guide-widget' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -741,20 +734,20 @@ class GuideWidget extends Widget_Base {
              data-button-offset-horizontal="<?php echo esc_attr($settings['button_offset_horizontal']['size'] ?? 2); ?>"
              data-button-offset-vertical="<?php echo esc_attr($settings['button_offset_vertical']['size'] ?? 2); ?>"
              data-button-sticky="<?php echo isset($settings['button_sticky']) && $settings['button_sticky'] === 'yes' ? 'yes' : 'no'; ?>"
-             data-button-bg-color="<?php echo esc_attr($settings['button_background_color'] ?? self::BUTTON_BG_COLOR_DEFAULT); ?>"
-             data-button-text-color="<?php echo esc_attr($settings['button_text_color'] ?? self::BUTTON_TEXT_COLOR_DEFAULT); ?>"
+             data-button-bg-color="<?php echo esc_attr($settings['button_background_color'] ?? '#2563eb'); ?>"
+             data-button-text-color="<?php echo esc_attr($settings['button_text_color'] ?? '#ffffff'); ?>"
              data-button-font-size="<?php echo esc_attr($settings['button_font_size']['size'] ?? 16); ?>"
              data-button-font-weight="<?php echo esc_attr($settings['button_font_weight'] ?? '500'); ?>"
              data-button-icon-size="<?php echo esc_attr($settings['button_icon_size']['size'] ?? 16); ?>"
              data-button-icon-spacing="<?php echo esc_attr($settings['button_icon_spacing']['size'] ?? 8); ?>"
-             data-button-icon-color="<?php echo esc_attr($settings['button_icon_color'] ?? self::BUTTON_TEXT_COLOR_DEFAULT); ?>"
+             data-button-icon-color="<?php echo esc_attr($settings['button_icon_color'] ?? '#ffffff'); ?>"
              data-button-border-radius-top="<?php echo esc_attr($button_border_radius['top'] ?? 8); ?>"
              data-button-border-radius-right="<?php echo esc_attr($button_border_radius['right'] ?? 8); ?>"
              data-button-border-radius-bottom="<?php echo esc_attr($button_border_radius['bottom'] ?? 8); ?>"
              data-button-border-radius-left="<?php echo esc_attr($button_border_radius['left'] ?? 8); ?>"
              data-button-box-shadow="<?php echo isset($settings['button_box_shadow']) && $settings['button_box_shadow'] === 'yes' ? 'yes' : 'no'; ?>"
              data-button-border-width="<?php echo esc_attr($settings['button_border_width']['size'] ?? 0); ?>"
-             data-button-border-color="<?php echo esc_attr($settings['button_border_color'] ?? self::BUTTON_BG_COLOR_DEFAULT); ?>"
+             data-button-border-color="<?php echo esc_attr($settings['button_border_color'] ?? '#2563eb'); ?>"
              data-button-margin-top="<?php echo esc_attr($button_margin['top'] ?? 0); ?>"
              data-button-margin-right="<?php echo esc_attr($button_margin['right'] ?? 0); ?>"
              data-button-margin-bottom="<?php echo esc_attr($button_margin['bottom'] ?? 0); ?>"
@@ -765,7 +758,7 @@ class GuideWidget extends Widget_Base {
              data-button-padding-left="<?php echo esc_attr($button_padding['left'] ?? 20); ?>"
              data-button-animation="<?php echo esc_attr($settings['button_animation'] ?? ''); ?>"
              data-animation-interval="<?php echo $animation_interval; ?>"
-             data-slide-bg-color="<?php echo esc_attr($settings['slide_background_color'] ?? self::BUTTON_TEXT_COLOR_DEFAULT); ?>"
+             data-slide-bg-color="<?php echo esc_attr($settings['slide_background_color'] ?? '#ffffff'); ?>"
              data-slide-border-radius="<?php echo esc_attr($settings['slide_border_radius']['size'] ?? 0); ?>"
              data-slide-box-shadow="<?php echo isset($settings['slide_box_shadow']) && $settings['slide_box_shadow'] === 'yes' ? 'yes' : 'no'; ?>">
             <div class="guide-widget-placeholder">در حال بارگذاری ویجت راهنما...</div>
@@ -796,20 +789,20 @@ class GuideWidget extends Widget_Base {
              data-button-offset-horizontal="{{{ settings.button_offset_horizontal && settings.button_offset_horizontal.size ? settings.button_offset_horizontal.size : 2 }}}"
              data-button-offset-vertical="{{{ settings.button_offset_vertical && settings.button_offset_vertical.size ? settings.button_offset_vertical.size : 2 }}}"
              data-button-sticky="{{{ settings.button_sticky || 'yes' }}}"
-             data-button-bg-color="{{{ settings.button_background_color || self::BUTTON_BG_COLOR_DEFAULT }}}"
-             data-button-text-color="{{{ settings.button_text_color || self::BUTTON_TEXT_COLOR_DEFAULT }}}"
+             data-button-bg-color="{{{ settings.button_background_color || '#2563eb' }}}"
+             data-button-text-color="{{{ settings.button_text_color || '#ffffff' }}}"
              data-button-font-size="{{{ settings.button_font_size && settings.button_font_size.size ? settings.button_font_size.size : 16 }}}"
              data-button-font-weight="{{{ settings.button_font_weight || '500' }}}"
              data-button-icon-size="{{{ settings.button_icon_size && settings.button_icon_size.size ? settings.button_icon_size.size : 16 }}}"
              data-button-icon-spacing="{{{ settings.button_icon_spacing && settings.button_icon_spacing.size ? settings.button_icon_spacing.size : 8 }}}"
-             data-button-icon-color="{{{ settings.button_icon_color || self::BUTTON_TEXT_COLOR_DEFAULT }}}"
+             data-button-icon-color="{{{ settings.button_icon_color || '#ffffff' }}}"
              data-button-border-radius-top="{{{ button_border_radius.top || 8 }}}"
              data-button-border-radius-right="{{{ button_border_radius.right || 8 }}}"
              data-button-border-radius-bottom="{{{ button_border_radius.bottom || 8 }}}"
              data-button-border-radius-left="{{{ button_border_radius.left || 8 }}}"
              data-button-box-shadow="{{{ settings.button_box_shadow || 'yes' }}}"
              data-button-border-width="{{{ settings.button_border_width && settings.button_border_width.size ? settings.button_border_width.size : 0 }}}"
-             data-button-border-color="{{{ settings.button_border_color || self::BUTTON_BG_COLOR_DEFAULT }}}"
+             data-button-border-color="{{{ settings.button_border_color || '#2563eb' }}}"
              data-button-margin-top="{{{ button_margin.top || 0 }}}"
              data-button-margin-right="{{{ button_margin.right || 0 }}}"
              data-button-margin-bottom="{{{ button_margin.bottom || 0 }}}"
@@ -820,7 +813,7 @@ class GuideWidget extends Widget_Base {
              data-button-padding-left="{{{ button_padding.left || 20 }}}"
              data-button-animation="{{{ settings.button_animation || '' }}}"
              data-animation-interval="{{{ animation_interval }}}"
-             data-slide-bg-color="{{{ settings.slide_background_color || self::BUTTON_TEXT_COLOR_DEFAULT }}}"
+             data-slide-bg-color="{{{ settings.slide_background_color || '#ffffff' }}}"
              data-slide-border-radius="{{{ settings.slide_border_radius && settings.slide_border_radius.size ? settings.slide_border_radius.size : 0 }}}"
              data-slide-box-shadow="{{{ settings.slide_box_shadow || 'yes' }}}">
             <div class="guide-widget-placeholder">در حال بارگذاری ویجت راهنما...</div>

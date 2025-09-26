@@ -47,15 +47,12 @@ class Print_Order_Shortcodes {
                     'ajax_url' => admin_url('admin-ajax.php'),
                     'nonce' => wp_create_nonce('print_order_nonce'),
                     'status_options' => [
-                        'wc-order-registered' => __('ثبت سفارش', 'print-order'),
-                        'wc-payment-completed' => __('تکمیل پرداخت', 'print-order'),
-                        'wc-designing' => __('طراحی', 'print-order'),
-                        'wc-design-approved' => __('تایید طرح', 'print-order'),
-                        'wc-printing' => __('در حال چاپ', 'print-order'),
-                        'wc-shipping' => __('در حال ارسال', 'print-order'),
-                        'wc-order-completed' => __('تکمیل سفارش', 'print-order'),
-                        'wc-cancelled' => __('لغو شده', 'print-order'),
-                        'wc-refunded' => __('بازپرداخت شده', 'print-order'),
+                        'pending' => __('ثبت', 'print-order'),
+                        'processing' => __('پرداخت', 'print-order'),
+                        'on-hold' => __('تأیید', 'print-order'),
+                        'completed' => __('چاپ', 'print-order'),
+                        'shipping' => __('ارسال', 'print-order'),
+                        'delivered' => __('تحویل‌شده', 'print-order'),
                     ],
                     'design_confirmed' => $design_confirmed,
                     'unread_messages' => $unread_messages,
@@ -74,22 +71,7 @@ class Print_Order_Shortcodes {
         }
 
         $user_id = get_current_user_id();
-        $custom_statuses = [
-            'wc-order-registered',
-            'wc-payment-completed',
-            'wc-designing',
-            'wc-design-approved',
-            'wc-printing',
-            'wc-shipping',
-            'wc-order-completed',
-            'wc-cancelled',
-            'wc-refunded',
-        ];
-        $orders = wc_get_orders([
-            'customer' => $user_id,
-            'limit' => -1,
-            'post_status' => $custom_statuses,
-        ]);
+        $orders = wc_get_orders(['customer' => $user_id, 'limit' => -1]);
         $options = get_option('print_order_options', []);
         $max_revisions = intval($options['max_design_revisions'] ?? 3);
 

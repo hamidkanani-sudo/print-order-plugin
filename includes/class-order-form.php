@@ -187,7 +187,7 @@ class Print_Order_Form {
             error_log('upload_file: Updated session temp_id to match sent temp_id: ' . $temp_id);
         }
 
-        $uploads_dir = WP_CONTENT_DIR . '/Uploads/';
+        $uploads_dir = WP_CONTENT_DIR . '/uploads/';
         if (!file_exists($uploads_dir) && !wp_mkdir_p($uploads_dir)) {
             error_log('upload_file: Failed to create uploads directory: ' . $uploads_dir);
             wp_send_json_error(['message' => 'خطا در ایجاد پوشه uploads: ' . $uploads_dir], 500);
@@ -197,7 +197,7 @@ class Print_Order_Form {
             wp_send_json_error(['message' => 'پوشه uploads قابل نوشتن نیست: ' . $uploads_dir], 500);
         }
 
-        $temp_dir = WP_CONTENT_DIR . '/Uploads/temp/' . $temp_id . '/';
+        $temp_dir = WP_CONTENT_DIR . '/uploads/temp/' . $temp_id . '/';
         error_log('upload_file: Attempting to create temp directory: ' . $temp_dir);
         if (!file_exists($temp_dir) && !wp_mkdir_p($temp_dir)) {
             error_log('upload_file: Failed to create temp directory: ' . $temp_dir);
@@ -223,7 +223,7 @@ class Print_Order_Form {
             wp_send_json_error(['message' => 'فایل پس از انتقال یافت نشد: ' . $file_path], 500);
         }
 
-        $temp_url = WP_CONTENT_URL . '/Uploads/temp/' . $temp_id . '/' . $file_name;
+        $temp_url = WP_CONTENT_URL . '/uploads/temp/' . $temp_id . '/' . $file_name;
 
         $temp_files = WC()->session->get('print_order_temp_files', []);
         $temp_files[] = [
@@ -267,7 +267,7 @@ class Print_Order_Form {
             wp_send_json_error(['message' => 'شناسه موقت نامعتبر است'], 403);
         }
 
-        $file_path = WP_CONTENT_DIR . '/Uploads/temp/' . $temp_id . '/' . $file_name;
+        $file_path = WP_CONTENT_DIR . '/uploads/temp/' . $temp_id . '/' . $file_name;
         if (file_exists($file_path)) {
             if (unlink($file_path)) {
                 error_log('delete_temp_file: File deleted successfully - Path: ' . $file_path);
@@ -814,7 +814,7 @@ class Print_Order_Form {
         if (isset($result['data']['code']) && in_array($result['data']['code'], [100, 101])) {
             $ref_id = $result['data']['ref_id'];
             $order->update_meta_data('_zarinpal_ref_id', $ref_id);
-            // Ensure essential meta data is preserved
+            // اطمینان از ذخیره متادیتاهای ضروری
             $existing_meta = $order->get_meta('print_order_data');
             if ($existing_meta) {
                 $order->update_meta_data('print_order_data', $existing_meta);
@@ -827,10 +827,18 @@ class Print_Order_Form {
             if ($existing_product_id) {
                 $order->update_meta_data('_print_order_wc_product_id', $existing_product_id);
             }
-            // Add WooCommerce meta for dashboard visibility
+            // اضافه کردن متادیتاهای ووکامرس برای نمایش در داشبورد
             $order->update_meta_data('_recorded_sales', 'yes');
             $order->update_meta_data('_order_stock_reduced', 'yes');
-            // Update status using standard WooCommerce method
+            // تغییر وضعیت با اطمینان از ذخیره درست
+            global $wpdb;
+            $wpdb->update(
+                $wpdb->posts,
+                ['post_status' => 'wc-payment-completed'],
+                ['ID' => $order->get_id()],
+                ['%s'],
+                ['%d']
+            );
             $order->set_status('wc-payment-completed', 'پرداخت از طریق زرین‌پال با شماره ارجاع ' . $ref_id . ' تأیید شد.');
             $order->save();
             error_log('verify_zarinpal_payment: Success - Ref ID: ' . $ref_id . ', Order ID: ' . $order->get_id() . ', Status updated to wc-payment-completed');
@@ -1010,17 +1018,6 @@ class Print_Order_Form {
             error_log('submit_order: No category found for product_id: ' . $product_id);
             wp_send_json_error(['message' => 'دسته‌بندی محصول یافت نشد']);
         }
-
-        // Fetch category name for meta data
-        $category_name = '';
-        $category_terms = wp_get_post_terms($product_id, 'product_cat', ['fields' => 'all']);
-        foreach ($category_terms as $term) {
-            if ($term->term_id == $category_id) {
-                $category_name = $term->name;
-                break;
-            }
-        }
-
         global $wpdb;
         $pricing = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}print_order_pricing", ARRAY_A);
         $options = get_option('print_order_options', ['design_fee' => 0, 'tax_rate' => 0, 'shipping_fee' => 0]);
@@ -1111,9 +1108,6 @@ class Print_Order_Form {
         }
         $order->calculate_totals();
         $order->set_total($total);
-        // Add category meta data
-        $order->update_meta_data('_print_order_category', $category_name);
-        $order->update_meta_data('_print_order_category_id', $category_id);
         $order->update_meta_data('print_order_data', $form_data);
         $order->update_meta_data('print_price', $print_price);
         $order->update_meta_data('design_fee', $design_fee);

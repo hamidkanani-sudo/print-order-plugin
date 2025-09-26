@@ -1,10 +1,10 @@
-(function (globalThis, React, ReactDOM) {
+(function (global, React, ReactDOM) {
     'use strict';
 
-    if (!globalThis.PrintOrderForm) {
-        globalThis.PrintOrderForm = {};
+    if (!global.PrintOrderForm) {
+        global.PrintOrderForm = {};
     }
-    globalThis.PrintOrderForm.guideWidget = globalThis.PrintOrderForm.guideWidget || {};
+    global.PrintOrderForm.guideWidget = global.PrintOrderForm.guideWidget || {};
 
     // بررسی زودهنگام وجود عنصر .print-order-guide
     if (!document.querySelector('.print-order-guide')) {
@@ -16,7 +16,7 @@
         return;
     }
 
-    if (!globalThis.PrintOrderForm.dataFetching) {
+    if (!global.PrintOrderForm.dataFetching) {
         console.error('GuideWidget: dataFetching module not loaded');
         return;
     }
@@ -47,7 +47,7 @@
         const [shortcodeContent, setShortcodeContent] = React.useState('<p class="text-gray-600 text-center">در حال انتظار برای انتخاب محصول...</p>');
         const [loadingTemplate, setLoadingTemplate] = React.useState(false);
         const [isSlideOpen, setIsSlideOpen] = React.useState(false);
-        const isMobile = globalThis.innerWidth < 768;
+        const isMobile = window.innerWidth < 768;
 
         // Handle form state changes via CustomEvent
         React.useEffect(() => {
@@ -58,8 +58,8 @@
                 setCategoryId(product?.category_id || null);
             };
 
-            globalThis.addEventListener('printOrderFormStateChange', handleFormStateChange);
-            return () => globalThis.removeEventListener('printOrderFormStateChange', handleFormStateChange);
+            window.addEventListener('printOrderFormStateChange', handleFormStateChange);
+            return () => window.removeEventListener('printOrderFormStateChange', handleFormStateChange);
         }, []);
 
         // Load template based on step and paper_type_persian
@@ -73,7 +73,7 @@
                 setLoadingTemplate(true);
                 try {
                     if (currentStep === 1) {
-                        await globalThis.PrintOrderForm.dataFetching.fetchTemplateShortcode(
+                        await global.PrintOrderForm.dataFetching.fetchTemplateShortcode(
                             categoryId,
                             paperTypePersian,
                             ajax_url,
@@ -83,7 +83,7 @@
                         );
                     } else {
                         const stage = currentStep === 2 ? 'stage_2' : currentStep === 3 ? 'stage_3_shipping' : 'stage_3_payment';
-                        await globalThis.PrintOrderForm.dataFetching.fetchStageTemplate(
+                        await global.PrintOrderForm.dataFetching.fetchStageTemplate(
                             stage,
                             ajax_url,
                             nonce,
@@ -227,55 +227,55 @@
         );
     };
 
-    globalThis.PrintOrderForm.guideWidget.renderGuideWidget = () => {
+    global.PrintOrderForm.guideWidget.renderGuideWidget = () => {
         const guideElements = document.querySelectorAll('.print-order-guide');
         if (guideElements.length === 0) {
             return;
         }
-        for (const element of guideElements) {
-            const ajax_url = element.dataset.ajaxUrl || '';
-            const nonce = element.dataset.nonce || '';
-            const loading_delay = element.dataset.loadingDelay || '500';
-            const button_text = element.dataset.buttonText || 'نمایش راهنما';
-            const button_icon = element.dataset.buttonIcon || '';
-            const icon_position = element.dataset.iconPosition || 'left';
-            const button_position = element.dataset.buttonPosition || 'bottom-right';
-            const slide_width = element.dataset.slideWidth || '80';
-            const slide_direction = element.dataset.slideDirection || 'right';
-            const close_method = element.dataset.closeMethod || 'both';
-            const button_offset_horizontal = Number.parseInt(element.dataset.buttonOffsetHorizontal, 10) || 20;
-            const button_offset_vertical = Number.parseInt(element.dataset.buttonOffsetVertical, 10) || 20;
+        guideElements.forEach((element) => {
+            const ajax_url = element.getAttribute('data-ajax-url') || '';
+            const nonce = element.getAttribute('data-nonce') || '';
+            const loading_delay = element.getAttribute('data-loading-delay') || '500';
+            const button_text = element.getAttribute('data-button-text') || 'نمایش راهنما';
+            const button_icon = element.getAttribute('data-button-icon') || '';
+            const icon_position = element.getAttribute('data-icon-position') || 'left';
+            const button_position = element.getAttribute('data-button-position') || 'bottom-right';
+            const slide_width = element.getAttribute('data-slide-width') || '80';
+            const slide_direction = element.getAttribute('data-slide-direction') || 'right';
+            const close_method = element.getAttribute('data-close-method') || 'both';
+            const button_offset_horizontal = parseInt(element.getAttribute('data-button-offset-horizontal')) || 20;
+            const button_offset_vertical = parseInt(element.getAttribute('data-button-offset-vertical')) || 20;
             const button_margin = {
-                top: Number.parseInt(element.dataset.buttonMarginTop, 10) || 0,
-                right: Number.parseInt(element.dataset.buttonMarginRight, 10) || 0,
-                bottom: Number.parseInt(element.dataset.buttonMarginBottom, 10) || 0,
-                left: Number.parseInt(element.dataset.buttonMarginLeft, 10) || 0,
+                top: parseInt(element.getAttribute('data-button-margin-top')) || 0,
+                right: parseInt(element.getAttribute('data-button-margin-right')) || 0,
+                bottom: parseInt(element.getAttribute('data-button-margin-bottom')) || 0,
+                left: parseInt(element.getAttribute('data-button-margin-left')) || 0,
             };
             const button_padding = {
-                top: Number.parseInt(element.dataset.buttonPaddingTop, 10) || 12,
-                right: Number.parseInt(element.dataset.buttonPaddingRight, 10) || 20,
-                bottom: Number.parseInt(element.dataset.buttonPaddingBottom, 10) || 12,
-                left: Number.parseInt(element.dataset.buttonPaddingLeft, 10) || 20,
+                top: parseInt(element.getAttribute('data-button-padding-top')) || 12,
+                right: parseInt(element.getAttribute('data-button-padding-right')) || 20,
+                bottom: parseInt(element.getAttribute('data-button-padding-bottom')) || 12,
+                left: parseInt(element.getAttribute('data-button-padding-left')) || 20,
             };
-            const button_animation = element.dataset.buttonAnimation || '';
-            const animation_interval = Number.parseInt(element.dataset.animationInterval, 10) || 3;
+            const button_animation = element.getAttribute('data-button-animation') || '';
+            const animation_interval = parseInt(element.getAttribute('data-animation-interval')) || 3;
             const button_styles = {
-                background_color: element.dataset.buttonBgColor || '#2563eb',
-                text_color: element.dataset.buttonTextColor || '#ffffff',
-                border_radius: Number.parseInt(element.dataset.buttonBorderRadius, 10) || 8,
-                box_shadow: element.dataset.buttonBoxShadow === 'yes',
-                border_width: Number.parseInt(element.dataset.buttonBorderWidth, 10) || 0,
-                border_color: element.dataset.buttonBorderColor || '#2563eb',
-                font_size: Number.parseInt(element.dataset.buttonFontSize, 10) || 16,
-                font_weight: element.dataset.buttonFontWeight || '500',
-                icon_size: Number.parseInt(element.dataset.buttonIconSize, 10) || 16,
-                icon_spacing: Number.parseInt(element.dataset.buttonIconSpacing, 10) || 8,
-                icon_color: element.dataset.buttonIconColor || '#ffffff',
+                background_color: element.getAttribute('data-button-bg-color') || '#2563eb',
+                text_color: element.getAttribute('data-button-text-color') || '#ffffff',
+                border_radius: parseInt(element.getAttribute('data-button-border-radius')) || 8,
+                box_shadow: element.getAttribute('data-button-box-shadow') === 'yes',
+                border_width: parseInt(element.getAttribute('data-button-border-width')) || 0,
+                border_color: element.getAttribute('data-button-border-color') || '#2563eb',
+                font_size: parseInt(element.getAttribute('data-button-font-size')) || 16,
+                font_weight: element.getAttribute('data-button-font-weight') || '500',
+                icon_size: parseInt(element.getAttribute('data-button-icon-size')) || 16,
+                icon_spacing: parseInt(element.getAttribute('data-button-icon-spacing')) || 8,
+                icon_color: element.getAttribute('data-button-icon-color') || '#ffffff',
             };
             const slide_styles = {
-                background_color: element.dataset.slideBgColor || '#ffffff',
-                border_radius: Number.parseInt(element.dataset.slideBorderRadius, 10) || 0,
-                box_shadow: element.dataset.slideBoxShadow === 'yes',
+                background_color: element.getAttribute('data-slide-bg-color') || '#ffffff',
+                border_radius: parseInt(element.getAttribute('data-slide-border-radius')) || 0,
+                box_shadow: element.getAttribute('data-slide-box-shadow') === 'yes',
             };
 
             if (!ajax_url || !nonce) {
@@ -306,15 +306,15 @@
                     animation_interval
                 })
             );
-        }
+        });
     };
 
     // Run initialization only when DOM is fully loaded
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
-        globalThis.PrintOrderForm.guideWidget.renderGuideWidget();
+        global.PrintOrderForm.guideWidget.renderGuideWidget();
     } else {
         document.addEventListener('DOMContentLoaded', () => {
-            globalThis.PrintOrderForm.guideWidget.renderGuideWidget();
+            global.PrintOrderForm.guideWidget.renderGuideWidget();
         });
     }
-})(globalThis, globalThis.React, globalThis.ReactDOM);
+})(window, window.React, window.ReactDOM);
